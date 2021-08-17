@@ -1,4 +1,6 @@
-﻿namespace WaifuShork.Common.QuickLinq
+﻿using Microsoft.Toolkit.Diagnostics;
+
+namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
@@ -17,21 +19,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static TResult[] WhereSelectF<T, TResult>(this T[] source, Func<T, bool> predicate, Func<T, TResult> selector)
+        public static TResult[] WhereSelectQ<T, TResult>(this T[] source, Func<T, bool> predicate, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new TResult[source.Length];
@@ -57,21 +59,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static TResult[] WhereSelectF<T, TResult>(this T[] source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
+        public static TResult[] WhereSelectQ<T, TResult>(this T[] source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new TResult[source.Length];
@@ -98,21 +100,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static TResult[] WhereSelectF<T, TResult>(this Span<T> source, Func<T, bool> predicate, Func<T, TResult> selector)
+        public static TResult[] WhereSelectQ<T, TResult>(this Span<T> source, Func<T, bool> predicate, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new TResult[source.Length];
@@ -137,21 +139,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static TResult[] WhereSelectF<T, TResult>(this Span<T> source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
+        public static TResult[] WhereSelectQ<T, TResult>(this Span<T> source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new TResult[source.Length];
@@ -178,21 +180,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static List<TResult> WhereSelectF<T, TResult>(this List<T> source, Func<T, bool> predicate, Func<T, TResult> selector)
+        public static List<TResult> WhereSelectQ<T, TResult>(this List<T> source, Func<T, bool> predicate, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = new List<TResult>();
@@ -214,21 +216,21 @@
         /// <param name="predicate">A function to use to filter the sequence.</param>
         /// <param name="selector">A function to transform the filtered elements.</param>
         /// <returns>A sequence of filtered and transformed elements.</returns>
-        public static List<TResult> WhereSelectF<T, TResult>(this List<T> source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
+        public static List<TResult> WhereSelectQ<T, TResult>(this List<T> source, Func<T, int, bool> predicate, Func<T, int, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = new List<TResult>();

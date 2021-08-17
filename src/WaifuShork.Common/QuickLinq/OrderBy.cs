@@ -3,7 +3,8 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
-    
+    using Microsoft.Toolkit.Diagnostics;
+
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
 	public static partial class QuickLinq
@@ -16,16 +17,16 @@
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <param name="comparer">A Comparer to compare keys.</param>
         /// <returns>A sequence whose elements are ordered according to a key</returns>
-        public static TSource[] OrderByF<TSource, TKey>(this TSource[] source, Func<TSource, TKey> keySelector,IComparer<TKey> comparer = null)
+        public static TSource[] OrderByQ<TSource, TKey>(this TSource[] source, Func<TSource, TKey> keySelector,IComparer<TKey> comparer = null)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (keySelector == null)
             {
-                throw ThrowHelper.ArgumentNull("keySelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(keySelector));
             }
 
             if (comparer == null)
@@ -54,15 +55,16 @@
         /// <returns>A sequence whose elements are ordered according to a key</returns>
         public static TSource[] OrderByDescendingF<TSource, TKey>(this TSource[] source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer = null)
         {
-            if (source == null) 
+            if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
-            if (keySelector == null) 
+            if (keySelector == null)
             {
-                throw ThrowHelper.ArgumentNull("keySelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(keySelector));
             }
+
 
             if (comparer == null) 
             {
@@ -91,17 +93,18 @@
         /// <param name="keySelector">A function to extract a key from an element.</param>
         /// <param name="comparer">A Comparer to compare keys.</param>
         /// <returns>A sequence whose elements are ordered according to a key</returns>
-        public static List<TSource> OrderByF<TSource, TKey>(this List<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer = null)
+        public static List<TSource> OrderByQ<TSource, TKey>(this List<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer = null)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (keySelector == null)
             {
-                throw ThrowHelper.ArgumentNull("keySelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(keySelector));
             }
+
 
             if (comparer == null)
             {
@@ -124,15 +127,16 @@
         /// <returns>A sequence whose elements are ordered according to a key</returns>
         public static List<TSource> OrderByDescendingF<TSource, TKey>(this List<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer = null) 
         {
-            if (source == null) 
+            if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
-            if (keySelector == null) 
+            if (keySelector == null)
             {
-                throw ThrowHelper.ArgumentNull("keySelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(keySelector));
             }
+
 
             if (comparer == null) 
             {

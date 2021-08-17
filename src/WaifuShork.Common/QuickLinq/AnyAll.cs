@@ -1,11 +1,10 @@
-﻿using System.Linq;
-
-namespace WaifuShork.Common.QuickLinq
+﻿namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
-    
+    using Microsoft.Toolkit.Diagnostics;
+
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
 	public static partial class QuickLinq
@@ -17,11 +16,11 @@ namespace WaifuShork.Common.QuickLinq
         /// </summary>        
         /// <param name="source">The array to check for emptiness</param>
         /// <returns>true if the source array contains any elements, otherwise, false/</returns>
-        public static bool AnyF<T>(this T[] source)
+        public static bool AnyQ<T>(this T[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             
             return source.Length > 0;
@@ -33,16 +32,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="source">An array whose elements to apply the predicate to.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if any elements in the source array pass the test in the specified predicate; otherwise, false.</returns>
-        public static bool AnyF<TSource>(this TSource[] source, Predicate<TSource> predicate)
+        public static bool AnyQ<TSource>(this TSource[] source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             return Array.Exists(source, predicate);
@@ -56,16 +55,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if every element of the source array passes the test in the specified
         /// predicate, or if the array is empty; otherwise, false</returns>
-        public static bool AllF<TSource>(this TSource[] source, Predicate<TSource> predicate)
+        public static bool AllQ<TSource>(this TSource[] source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             return Array.TrueForAll(source, predicate);
@@ -78,12 +77,13 @@ namespace WaifuShork.Common.QuickLinq
         /// </summary>        
         /// <param name="source">The array to check for emptiness</param>
         /// <returns>true if the source array contains any elements, otherwise, false/</returns>
-        public static bool AnyF<T>(this Span<T> source)
+        public static bool AnyQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
+
             return source.Length > 0;
         }
 
@@ -93,16 +93,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="source">An array whose elements to apply the predicate to.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if any elements in the source array pass the test in the specified predicate; otherwise, false.</returns>
-        public static bool AnyF<TSource>(this Span<TSource> source, Predicate<TSource> predicate)
+        public static bool AnyQ<TSource>(this Span<TSource> source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             for (var i = 0; i < source.Length; i++)
@@ -120,16 +120,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if every element of the source array passes the test in the specified
         /// predicate, or if the array is empty; otherwise, false</returns>
-        public static bool AllF<TSource>(this Span<TSource> source, Predicate<TSource> predicate)
+        public static bool AllQ<TSource>(this Span<TSource> source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             for (var i = 0; i < source.Length; i++)
@@ -146,12 +146,13 @@ namespace WaifuShork.Common.QuickLinq
         /// </summary>        
         /// <param name="source">The list to check for emptiness</param>
         /// <returns>true if the source list contains any elements, otherwise, false/</returns>
-        public static bool AnyF<T>(this List<T> source)
+        public static bool AnyQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
+            
             return source.Count > 0;
         }
 
@@ -161,16 +162,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="source">An array whose elements to apply the predicate to.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if any elements in the source array pass the test in the specified predicate; otherwise, false.</returns>
-        public static bool AnyF<TSource>(this List<TSource> source, Predicate<TSource> predicate)
+        public static bool AnyQ<TSource>(this List<TSource> source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             return source.Exists(predicate);
@@ -183,16 +184,16 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if every element of the source array passes the test in the specified
         /// predicate, or if the list is empty; otherwise, false</returns>
-        public static bool AllF<TSource>(this List<TSource> source, Predicate<TSource> predicate)
+        public static bool AllQ<TSource>(this List<TSource> source, Predicate<TSource> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             return source.TrueForAll(predicate);
@@ -205,13 +206,13 @@ namespace WaifuShork.Common.QuickLinq
         /// </summary>        
         /// <param name="source">The array to check for emptiness</param>
         /// <returns>true if the source array contains any elements, otherwise, false/</returns>
-        public static bool AnyF(this string source)
+        public static bool AnyQ(this string source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
-            
+
             return source.Length > 0;
         }
         
@@ -221,7 +222,7 @@ namespace WaifuShork.Common.QuickLinq
         /// <param name="source">An array whose elements to apply the predicate to.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>true if any elements in the source array pass the test in the specified predicate; otherwise, false.</returns>
-        public static bool AnyF(this string source, Predicate<char> predicate)
+        public static bool AnyQ(this string source, Predicate<char> predicate)
         {
             var r = new char[source.Length];
             for (var i = 0; i < source.Length; i++)

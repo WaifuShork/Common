@@ -2,7 +2,8 @@
 {
 	using Utilities;
 	using System.Collections.Generic;
-    
+	using Microsoft.Toolkit.Diagnostics;
+
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
 	public static partial class QuickLinq
@@ -14,11 +15,11 @@
 		/// <param name="source">The list to remove duplicate elements from.</param>
 		/// <param name="eqComparer">Optional IEqualityComparer to compare values.</param>        
 		/// <param name="comparer">Optional IComparer to compare values.</param>        
-		public static void DistinctInPlaceF<TSource>(this List<TSource> source, IEqualityComparer<TSource> eqComparer = null, IComparer<TSource> comparer = null)
+		public static void DistinctInPlaceQ<TSource>(this List<TSource> source, IEqualityComparer<TSource> eqComparer = null, IComparer<TSource> comparer = null)
 		{                        
 			if (source == null)
 			{
-				throw ThrowHelper.ArgumentNull("source");
+				ThrowHelper.ThrowArgumentNullException(nameof(source));
 			}
 
 			if (comparer == null)

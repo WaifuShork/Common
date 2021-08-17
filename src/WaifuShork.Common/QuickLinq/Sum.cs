@@ -1,4 +1,7 @@
-﻿namespace WaifuShork.Common.QuickLinq
+﻿using System.Linq;
+using Microsoft.Toolkit.Diagnostics;
+
+namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
@@ -15,11 +18,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static int SumF(this int[] source)
+        public static int SumQ(this int[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             
             var sum = 0;
@@ -39,16 +42,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static int SumF<T>(this T[] source, Func<T, int> selector)
+        public static int SumQ<T>(this T[] source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var sum = 0;
@@ -67,11 +70,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static long SumF(this long[] source)
+        public static long SumQ(this long[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             long sum = 0;
             checked
@@ -90,16 +93,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static long SumF<T>(this T[] source, Func<T, long> selector)
+        public static long SumQ<T>(this T[] source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             long sum = 0;
@@ -118,11 +121,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static float SumF(this float[] source)
+        public static float SumQ(this float[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
 
@@ -140,16 +143,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static float SumF<T>(this T[] source, Func<T, float> selector)
+        public static float SumQ<T>(this T[] source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -166,11 +169,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static double SumF(this double[] source)
+        public static double SumQ(this double[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
             for (var i = 0; i < source.Length; i++)
@@ -187,16 +190,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static double SumF<T>(this T[] source, Func<T, double> selector)
+        public static double SumQ<T>(this T[] source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -213,11 +216,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static decimal SumF(this decimal[] source)
+        public static decimal SumQ(this decimal[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             decimal sum = 0;
 
@@ -235,16 +238,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static decimal SumF<T>(this T[] source, Func<T, decimal> selector)
+        public static decimal SumQ<T>(this T[] source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             decimal sum = 0;
@@ -263,11 +266,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static int SumF(this Span<int> source)
+        public static int SumQ(this Span<int> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             var sum = 0;
             checked
@@ -286,16 +289,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static int SumF<T>(this Span<T> source, Func<T, int> selector)
+        public static int SumQ<T>(this Span<T> source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var sum = 0;
@@ -314,11 +317,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static long SumF(this Span<long> source)
+        public static long SumQ(this Span<long> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             long sum = 0;
             checked
@@ -337,16 +340,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static long SumF<T>(this Span<T> source, Func<T, long> selector)
+        public static long SumQ<T>(this Span<T> source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             long sum = 0;
@@ -365,11 +368,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static float SumF(this Span<float> source)
+        public static float SumQ(this Span<float> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
 
@@ -387,16 +390,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static float SumF<T>(this Span<T> source, Func<T, float> selector)
+        public static float SumQ<T>(this Span<T> source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -413,11 +416,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static double SumF(this Span<double> source)
+        public static double SumQ(this Span<double> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
             for (var i = 0; i < source.Length; i++)
@@ -434,16 +437,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static double SumF<T>(this Span<T> source, Func<T, double> selector)
+        public static double SumQ<T>(this Span<T> source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -460,11 +463,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static decimal SumF(this Span<decimal> source)
+        public static decimal SumQ(this Span<decimal> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             decimal sum = 0;
 
@@ -482,16 +485,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static decimal SumF<T>(this Span<T> source, Func<T, decimal> selector)
+        public static decimal SumQ<T>(this Span<T> source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             decimal sum = 0;
@@ -510,11 +513,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static int SumF(this List<int> source)
+        public static int SumQ(this List<int> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             var sum = 0;
             checked
@@ -533,16 +536,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static int SumF<T>(this List<T> source, Func<T, int> selector)
+        public static int SumQ<T>(this List<T> source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var sum = 0;
@@ -561,11 +564,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static long SumF(this List<long> source)
+        public static long SumQ(this List<long> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             long sum = 0;
             checked
@@ -584,16 +587,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static long SumF<T>(this List<T> source, Func<T, long> selector)
+        public static long SumQ<T>(this List<T> source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             long sum = 0;
@@ -612,11 +615,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static float SumF(this List<float> source)
+        public static float SumQ(this List<float> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
 
@@ -634,16 +637,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static float SumF<T>(this List<T> source, Func<T, float> selector)
+        public static float SumQ<T>(this List<T> source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -660,11 +663,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static double SumF(this List<double> source)
+        public static double SumQ(this List<double> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             double sum = 0;
             for (var i = 0; i < source.Count; i++)
@@ -681,16 +684,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static double SumF<T>(this List<T> source, Func<T, double> selector)
+        public static double SumQ<T>(this List<T> source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             double sum = 0;
@@ -707,11 +710,11 @@
         /// </summary>
         /// <param name="source">The sequence to add.</param>
         /// <returns>The sum of the sequence.</returns>
-        public static decimal SumF(this List<decimal> source)
+        public static decimal SumQ(this List<decimal> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             decimal sum = 0;
 
@@ -729,16 +732,16 @@
         /// <param name="source">The sequence of values to transform then sum.</param>
         /// <param name="selector">A transformation function.</param>
         /// <returns>The sum of the transformed elements.</returns>
-        public static decimal SumF<T>(this List<T> source, Func<T, decimal> selector)
+        public static decimal SumQ<T>(this List<T> source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             decimal sum = 0;

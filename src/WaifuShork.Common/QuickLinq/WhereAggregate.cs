@@ -1,4 +1,6 @@
-﻿namespace WaifuShork.Common.QuickLinq
+﻿using Microsoft.Toolkit.Diagnostics;
+
+namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
@@ -17,20 +19,20 @@
         /// <param name="predicate">The function to filter the input sequence with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this T[] source, Func<T, bool> predicate, Func<T, T, T> func)
+        public static T WhereAggregateQ<T>(this T[] source, Func<T, bool> predicate, Func<T, T, T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = default(T);
@@ -62,16 +64,16 @@
         /// <param name="predicate">The function to filter the input sequence and it's index with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this T[] source, Func<T, int, bool> predicate, Func<T, T,T> func)
+        public static T WhereAggregateQ<T>(this T[] source, Func<T, int, bool> predicate, Func<T, T,T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -104,21 +106,21 @@
         /// <param name="seed">The initial value to aggregate on.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static TAccumulate WhereAggregateF<TSource, TAccumulate>(this TSource[] source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate WhereAggregateQ<TSource, TAccumulate>(this TSource[] source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = seed;
@@ -141,26 +143,26 @@
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <param name="resultSelector">A function to transform the final result.</param>
         /// <returns>The filtered then aggregated then transformed sequence.</returns>
-        public static TResult WhereAggregateF<TSource, TAccumulate, TResult>(this TSource[] source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult WhereAggregateQ<TSource, TAccumulate, TResult>(this TSource[] source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;
@@ -186,20 +188,20 @@
         /// <param name="predicate">The function to filter the input sequence with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this Span<T> source, Func<T, bool> predicate, Func<T, T, T> func)
+        public static T WhereAggregateQ<T>(this Span<T> source, Func<T, bool> predicate, Func<T, T, T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = default(T);
@@ -231,16 +233,16 @@
         /// <param name="predicate">The function to filter the input sequence and it's index with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this Span<T> source, Func<T, int, bool> predicate, Func<T, T, T> func)
+        public static T WhereAggregateQ<T>(this Span<T> source, Func<T, int, bool> predicate, Func<T, T, T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -273,21 +275,21 @@
         /// <param name="seed">The initial value to aggregate on.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static TAccumulate WhereAggregateF<TSource, TAccumulate>(this Span<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate WhereAggregateQ<TSource, TAccumulate>(this Span<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = seed;
@@ -310,26 +312,26 @@
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <param name="resultSelector">A function to transform the final result.</param>
         /// <returns>The filtered then aggregated then transformed sequence.</returns>
-        public static TResult WhereAggregateF<TSource, TAccumulate, TResult>(this Span<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult WhereAggregateQ<TSource, TAccumulate, TResult>(this Span<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;
@@ -355,21 +357,21 @@
         /// <param name="predicate">The function to filter the input sequence with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this List<T> source, Func<T, bool> predicate, Func<T, T, T> func)
+        public static T WhereAggregateQ<T>(this List<T> source, Func<T, bool> predicate, Func<T, T, T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = default(T);
@@ -401,16 +403,16 @@
         /// <param name="predicate">The function to filter the input sequence and it's index with.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static T WhereAggregateF<T>(this List<T> source, Func<T, int, bool> predicate, Func<T, T, T> func)
+        public static T WhereAggregateQ<T>(this List<T> source, Func<T, int, bool> predicate, Func<T, T, T> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -443,21 +445,21 @@
         /// <param name="seed">The initial value to aggregate on.</param>
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <returns>The filtered then aggregated sequence.</returns>
-        public static TAccumulate WhereAggregateF<TSource, TAccumulate>(this List<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate WhereAggregateQ<TSource, TAccumulate>(this List<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = seed;
@@ -480,21 +482,21 @@
         /// <param name="func">The function to aggregate the filtered sequence.</param>
         /// <param name="resultSelector">A function to transform the final result.</param>
         /// <returns>The filtered then aggregated then transformed sequence.</returns>
-        public static TResult WhereAggregateF<TSource, TAccumulate, TResult>(this List<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult WhereAggregateQ<TSource, TAccumulate, TResult>(this List<TSource> source, Func<TSource, bool> predicate, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;

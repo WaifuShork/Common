@@ -1,8 +1,8 @@
 ﻿namespace WaifuShork.Common.QuickLinq
 {
     using System;
-    using Utilities;
     using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
     // ReSharper disable LoopCanBeConvertedToQuery
     // ReSharper disable ForCanBeConvertedToForeach
@@ -16,21 +16,21 @@
         /// <param name="source">An array to aggregate over.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TSource AggregateF<TSource>(this TSource[] source, Func<TSource, TSource, TSource> func)
+        public static TSource AggregateQ<TSource>(this TSource[] source, Func<TSource, TSource, TSource> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var result = source[0];
@@ -50,16 +50,16 @@
         /// <param name="seed">The initial accumulator value.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TAccumulate AggregateF<TSource, TAccumulate>(this TSource[] source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate AggregateQ<TSource, TAccumulate>(this TSource[] source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = seed;
@@ -81,21 +81,21 @@
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <param name="resultSelector">A function to transform the final accumulator value into the result value.</param>
         /// <returns>The transformed final accumulator value</returns>
-        public static TResult AggregateF<TSource, TAccumulate, TResult>(this TSource[] source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult AggregateQ<TSource, TAccumulate, TResult>(this TSource[] source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;
@@ -115,21 +115,21 @@
         /// <param name="source">An array to aggregate over.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TSource AggregateF<TSource>(this Span<TSource> source, Func<TSource, TSource, TSource> func)
+        public static TSource AggregateQ<TSource>(this Span<TSource> source, Func<TSource, TSource, TSource> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var result = source[0];
@@ -148,16 +148,16 @@
         /// <param name="seed">The initial accumulator value.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TAccumulate AggregateF<TSource, TAccumulate>(this Span<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate AggregateQ<TSource, TAccumulate>(this Span<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = seed;
@@ -179,21 +179,21 @@
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <param name="resultSelector">A function to transform the final accumulator value into the result value.</param>
         /// <returns>The transformed final accumulator value</returns>
-        public static TResult AggregateF<TSource, TAccumulate, TResult>(this Span<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult AggregateQ<TSource, TAccumulate, TResult>(this Span<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;
@@ -214,21 +214,21 @@
         /// <param name="source">A List to aggregate over.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TSource AggregateF<TSource>(this List<TSource> source, Func<TSource, TSource, TSource> func)
+        public static TSource AggregateQ<TSource>(this List<TSource> source, Func<TSource, TSource, TSource> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var result = source[0];
@@ -247,16 +247,16 @@
         /// <param name="seed">The initial accumulator value.</param>
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <returns>The final accumulator value</returns>
-        public static TAccumulate AggregateF<TSource, TAccumulate>(this List<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+        public static TAccumulate AggregateQ<TSource, TAccumulate>(this List<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             var result = seed;
@@ -277,21 +277,21 @@
         /// <param name="func">An accumulator function to be invoked on each element</param>
         /// <param name="resultSelector">A function to transform the final accumulator value into the result value.</param>
         /// <returns>The transformed final accumulator value</returns>
-        public static TResult AggregateF<TSource, TAccumulate, TResult>(this List<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
+        public static TResult AggregateQ<TSource, TAccumulate, TResult>(this List<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (func == null)
             {
-                throw ThrowHelper.ArgumentNull("func");
+                ThrowHelper.ThrowArgumentNullException(nameof(func));
             }
 
             if (resultSelector == null)
             {
-                throw ThrowHelper.ArgumentNull("resultSelector");
+                ThrowHelper.ThrowArgumentNullException(nameof(resultSelector));
             }
 
             var result = seed;

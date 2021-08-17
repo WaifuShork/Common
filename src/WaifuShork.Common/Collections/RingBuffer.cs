@@ -1,20 +1,18 @@
-﻿using System.Text;
-
-namespace WaifuShork.Common
+﻿namespace WaifuShork.Common
 {
     using System;
     using QuickLinq;
-    using Utilities;
     using Extensions;
     using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
 
     /// <summary>
     /// A circular buffer collection.
     /// </summary>
     /// <typeparam name="T">Type of elements within this ring buffer.</typeparam>
-	public class RingBuffer<T> : ICollection<T>, IDeepEquatable<ConcurrentRingBuffer<T>>
+	public class RingBuffer<T> : ICollection<T>, IDeepEquatable<RingBuffer<T>>
     {
         private bool _reachedEnd;
 
@@ -27,7 +25,7 @@ namespace WaifuShork.Common
         {
             if (size <= 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), "Size must be positive.");
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), $"Cannot initialize a negatively sized RingBuffer<{typeof(T)}>");
             }
 
             this.CurrentIndex = 0;
@@ -42,31 +40,40 @@ namespace WaifuShork.Common
         /// <param name="index">Starting element index.</param>
         /// <exception cref="ArgumentException" />
         /// <exception cref="ArgumentOutOfRangeException" />
-        public RingBuffer(T[] elements, int index = 0)
+        // ReSharper disable once MemberCanBePrivate.Global
+        public RingBuffer(IEnumerable<T> elements, int index = 0)
         {
-            if (!elements.AnyF())
+            if (elements == null)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(elements), "Cannot create a RingBuffer with no elements");    
+                ThrowHelper.ThrowArgumentNullException(nameof(elements), $"Cannot initialize a RingBuffer<{typeof(T)}> from a null collection of {typeof(T)}");
+            }
+
+            var elementCollection = elements.ToArray();
+            if (!elementCollection.AnyQ())
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(elements), $"Cannot initialize a RingBuffer<{typeof(T)}> from an empty collection of {typeof(T)}");    
             }
             
             this.CurrentIndex = index;
-            this.InternalBuffer = elements.DeepClone();
+            this.InternalBuffer = elementCollection.DeepClone();
             this.Capacity = this.InternalBuffer.Length;
 
             if (this.CurrentIndex >= this.InternalBuffer.Length || this.CurrentIndex < 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(index), "Index must be less than buffer capacity, and greater than zero.");
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(index), "Initialization index must be less than buffer's capacity, and cannot be negative.");
             }
         }
         
         /// <summary>
         /// Gets the current index of the buffer items.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public int CurrentIndex { get; protected set; }
 
         /// <summary>
         /// Gets the capacity of this ring buffer.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public int Capacity { get; protected set; }
 
         /// <summary>
@@ -82,6 +89,7 @@ namespace WaifuShork.Common
         /// <summary>
         /// Gets or sets the internal collection of items.
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         protected T[] InternalBuffer { get; set; }
 
         public void GrowBy(int amount)
@@ -104,6 +112,7 @@ namespace WaifuShork.Common
         {
             this.InternalBuffer[this.CurrentIndex++] = item;
 
+            // You can only add to the end of the buffer 
             if (this.CurrentIndex == this.Capacity)
             {
                 this.CurrentIndex = 0;
@@ -154,14 +163,13 @@ namespace WaifuShork.Common
         }
 
         /// <summary>
-        /// Checks whether given item is present in the buffer. This method is not implemented. Use <see cref="Contains(Func{T, bool})"/> instead.
+        /// Checks whether given item is present in the buffer. This method is not implemented. Use <see cref="Contains(T)"/> instead.
         /// </summary>
         /// <param name="item">Item to check for.</param>
         /// <returns>Whether the buffer contains the item.</returns>
-        /// <exception cref="NotImplementedException" />
         public bool Contains(T item)
         {
-            throw new NotImplementedException("This method is not implemented. Use .Contains(predicate) instead.");
+            return this.InternalBuffer.ContainsQ(item);
         }
 
         /// <summary>
@@ -171,7 +179,7 @@ namespace WaifuShork.Common
         /// <returns>Whether the buffer contains the item.</returns>
         public bool Contains(Predicate<T> predicate)
         {
-            return this.InternalBuffer.AnyF(predicate);
+            return this.InternalBuffer.AnyQ(predicate);
         }
 
         /// <summary>
@@ -199,7 +207,7 @@ namespace WaifuShork.Common
         }
 
         /// <summary>
-        /// Removes an item from the buffer. This method is not implemented. Use <see cref="Remove(Func{T, bool})"/> instead.
+        /// Removes an item from the buffer. This method is not implemented. Use <see cref="Remove(T)"/> instead.
         /// </summary>
         /// <param name="item">Item to remove.</param>
         /// <returns>Whether an item was removed or not.</returns>
@@ -237,8 +245,8 @@ namespace WaifuShork.Common
             {
                 return this.InternalBuffer.AsEnumerable().GetEnumerator();
             }
-            return this.InternalBuffer.SkipF(this.CurrentIndex)
-                    .Concat(this.InternalBuffer.TakeF(this.CurrentIndex))
+            return this.InternalBuffer.SkipQ(this.CurrentIndex)
+                    .Concat(this.InternalBuffer.TakeQ(this.CurrentIndex))
                     .GetEnumerator();
         }
 
@@ -255,20 +263,7 @@ namespace WaifuShork.Common
 
         public static explicit operator RingBuffer<T>(List<T> collection)
         {
-            return new(collection.ToArray());
-        }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"RingBuffer<{typeof(T)}>");
-			
-            for (var i = 0; i < this.Count; i++)
-            {
-                sb.AppendLine($"{this.InternalBuffer[i]}");
-            }
-
-            return sb.ToString();
+            return new(collection);
         }
 
         public bool Equals(RingBuffer<T> other)

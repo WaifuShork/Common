@@ -1,8 +1,8 @@
 ﻿namespace WaifuShork.Common.QuickLinq
 {
 	using System;
-	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -15,16 +15,17 @@
         /// </summary>        
         /// <param name="source">The array to return the first element of.</param>
         /// <returns>The first element in the specified array.</returns>
-        public static T FirstF<T>(this T[] source)
+        public static T FirstQ<T>(this T[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
+            
             return source[0];
         }
 
@@ -34,16 +35,16 @@
         /// <param name="source">An array to return an element from.</param>
         /// <param name="predicate">A function to teast each element for a condition.</param>
         /// <returns>The first element that satisfies the condition.</returns>
-        public static T FirstF<T>(this T[] source, Func<T, bool> predicate)
+        public static T FirstQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             for (var i = 0; i < source.Length; i++)
@@ -54,11 +55,10 @@
                 }
             }
 
-            throw ThrowHelper.NoMatch();
+            ThrowHelper.ThrowInvalidOperationException("");
+            return (T)(object)null;
         }
-
-       
-
+        
 
         /// <summary>
         /// Returns the first element of an array, or a default value if the
@@ -67,11 +67,11 @@
         /// <param name="source">The array to return the first element of.</param>
         /// <returns>default value if source is empty, otherwise, the first element
         /// in source.</returns>        
-        public static T FirstOrDefaultF<T>(this T[] source)
+        public static T FirstOrDefaultQ<T>(this T[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
@@ -87,17 +87,18 @@
         /// <param name="source">An IEnumerable to return an element from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns></returns>
-        public static T FirstOrDefaultF<T>(this T[] source, Func<T, bool> predicate)
+        public static T FirstOrDefaultQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
+
 
             for (var i = 0; i < source.Length; i++)
             {
@@ -117,15 +118,15 @@
         /// </summary>        
         /// <param name="source">The array to return the first element of.</param>
         /// <returns>The first element in the specified array.</returns>
-        public static T FirstF<T>(this Span<T> source)
+        public static T FirstQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             
             return source[0];
@@ -137,16 +138,16 @@
         /// <param name="source">An array to return an element from.</param>
         /// <param name="predicate">A function to teast each element for a condition.</param>
         /// <returns>The first element that satisfies the condition.</returns>
-        public static T FirstF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T FirstQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             for (var i = 0; i < source.Length; i++)
@@ -157,12 +158,10 @@
                 }
             }
 
-            throw ThrowHelper.NoMatch();
+            ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
+            return default;
         }
-
-
-
-
+        
         /// <summary>
         /// Returns the first element of an array, or a default value if the
         /// array contains no elements.
@@ -170,12 +169,14 @@
         /// <param name="source">The array to return the first element of.</param>
         /// <returns>default value if source is empty, otherwise, the first element
         /// in source.</returns>        
-        public static T FirstOrDefaultF<T>(this Span<T> source)
+        public static T FirstOrDefaultQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
+
+            
             if (source.Length == 0)
             {
                 return default;
@@ -191,16 +192,16 @@
         /// <param name="source">An IEnumerable to return an element from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns></returns>
-        public static T FirstOrDefaultF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T FirstOrDefaultQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             for (var i = 0; i < source.Length; i++)
@@ -221,15 +222,15 @@
         /// </summary>        
         /// <param name="source">The list to return the first element of.</param>
         /// <returns>The first element in the specified list.</returns>   
-        public static T FirstF<T>(this List<T> source)
+        public static T FirstQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             return source[0];
         }
@@ -240,22 +241,22 @@
         /// <param name="source">An list to return an element from.</param>
         /// <param name="predicate">A function to teast each element for a condition.</param>
         /// <returns>The first element in the list that satisfies the condition.</returns>       
-        public static T FirstF<T>(this List<T> source, Predicate<T> predicate)
+        public static T FirstQ<T>(this List<T> source, Predicate<T> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var firstIndex = source.FindIndex(predicate);
             if (firstIndex == -1)
             {
-                throw ThrowHelper.NoMatch();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             
             return source[firstIndex];
@@ -268,11 +269,11 @@
         /// <param name="source">The array to return the first element of.</param>
         /// <returns>default value if source is empty, otherwise, the first element
         /// in source.</returns>      
-        public static T FirstOrDefaultF<T>(this List<T> source)
+        public static T FirstOrDefaultQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
@@ -289,16 +290,16 @@
         /// <param name="source">An IEnumerable to return an element from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns></returns>
-        public static T FirstOrDefaultF<T>(this List<T> source, Predicate<T> predicate)
+        public static T FirstOrDefaultQ<T>(this List<T> source, Predicate<T> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var firstIndex = source.FindIndex(predicate);

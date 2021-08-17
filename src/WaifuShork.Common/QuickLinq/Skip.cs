@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -14,11 +15,11 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
         /// <returns>A sequence that contains the elements that occur after the specified index in the input sequence.</returns>
-        public static T[] SkipF<T>(this T[] source, int count)
+        public static T[] SkipQ<T>(this T[] source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (count < 0)
             {
@@ -40,15 +41,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.</returns>
-        public static T[] SkipWhileF<T>(this T[] source, Func<T, bool> predicate)
+        public static T[] SkipWhileQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var i = 0;
@@ -69,12 +70,13 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
         /// <returns>A sequence that contains the elements that occur after the specified index in the input sequence.</returns>
-        public static T[] SkipF<T>(this Span<T> source, int count)
+        public static T[] SkipQ<T>(this Span<T> source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
+           
             if (count < 0)
             {
                 count = 0;
@@ -98,15 +100,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.</returns>
-        public static T[] SkipWhileF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T[] SkipWhileQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -131,11 +133,11 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="count">The number of elements to skip before returning the remaining elements.</param>
         /// <returns>A sequence that contains the elements that occur after the specified index in the input sequence.</returns>
-        public static List<T> SkipF<T>(this List<T> source, int count)
+        public static List<T> SkipQ<T>(this List<T> source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (count < 0)
             {
@@ -160,15 +162,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence starting at the first element in the linear series that does not pass the test specified by predicate.</returns>
-        public static List<T> SkipWhileF<T>(this List<T> source, Func<T, bool> predicate)
+        public static List<T> SkipWhileQ<T>(this List<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var i = 0;

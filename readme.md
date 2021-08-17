@@ -15,4 +15,11 @@ As of right now since the repository is very new and empty, I don't plan on addi
 unfortunately.
 
 ## Documentation
-Coming soon™
+Most of this library is very poorly documented for right now, but I'll eventually take a day to document everything,
+so stay tuned because it'll be `coming soon™`
+
+## Do I Accept PRs?
+
+Yes and no. If you're **adding** new code entirely, I'll almost guaranteed decline it, because it likely isn't something
+I'll commonly use since it'll be for you. If you're **refactoring** already existing code to be faster, or better in any way,
+if it passes CI/CD then I'll most certainly merge it.

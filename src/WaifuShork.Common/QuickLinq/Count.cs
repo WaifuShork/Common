@@ -1,9 +1,9 @@
 ﻿namespace WaifuShork.Common.QuickLinq
 {
 	using System;
-	using Utilities;
-	using System.Collections.Generic;
-    
+    using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
+
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
 	public static partial class QuickLinq
@@ -18,16 +18,16 @@
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A number that represents how many elements in the array satisfy the condition
         /// in the predicate function.</returns>
-        public static int CountF<T>(this T[] source, Func<T, bool> predicate)
+        public static int CountQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -55,16 +55,16 @@
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A number that represents how many elements in the array satisfy the condition
         /// in the predicate function.</returns>
-        public static int CountF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static int CountQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -93,16 +93,16 @@
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A number that represents how many elements in the list satisfy the condition
         /// in the predicate function.</returns>
-        public static int CountF<T>(this List<T> source, Func<T, bool> predicate)
+        public static int CountQ<T>(this List<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;

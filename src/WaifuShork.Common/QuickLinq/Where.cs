@@ -1,4 +1,6 @@
-﻿namespace WaifuShork.Common.QuickLinq
+﻿using Microsoft.Toolkit.Diagnostics;
+
+namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
@@ -16,16 +18,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>        
-        public static T[] WhereF<T>(this T[] source, Func<T, bool> predicate)
+        public static T[] WhereQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new T[source.Length];
@@ -48,16 +50,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition along with the element's index.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>
-        public static T[] WhereF<T>(this T[] source, Func<T, int, bool> predicate)
+        public static T[] WhereQ<T>(this T[] source, Func<T, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
             
             
@@ -83,16 +85,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>        
-        public static T[] WhereF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T[] WhereQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new T[source.Length];
@@ -115,16 +117,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition along with the element's index.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>
-        public static T[] WhereF<T>(this Span<T> source, Func<T, int, bool> predicate)
+        public static T[] WhereQ<T>(this Span<T> source, Func<T, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
 
@@ -150,16 +152,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>
-        public static List<T> WhereF<T>(this List<T> source, Predicate<T> predicate)
+        public static List<T> WhereQ<T>(this List<T> source, Predicate<T> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }            
 
             return source.FindAll(predicate);            
@@ -172,16 +174,16 @@
         /// <param name="source">A sequence to filter.</param>
         /// <param name="predicate">A function to test each element for a condition along with the element's index.</param>
         /// <returns>A sequence that contains elements from the input sequence that satisfy the condition.</returns>
-        public static List<T> WhereF<T>(this List<T> source, Func<T, int, bool> predicate)
+        public static List<T> WhereQ<T>(this List<T> source, Func<T, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var r = new List<T>();

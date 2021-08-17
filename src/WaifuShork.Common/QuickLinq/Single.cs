@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -15,21 +16,22 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence or default if no elements exist.</returns>
-        public static T SingleF<T>(this T[] source)
+        public static T SingleQ<T>(this T[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
+                
             }
 
-            if (source.Length > 1) 
+            if (source.Length > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -40,11 +42,11 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence</returns>
-        public static T SingleOrDefaultF<T>(this T[] source)
+        public static T SingleOrDefaultQ<T>(this T[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (source.Length == 0)
@@ -54,7 +56,7 @@
 
             if (source.Length > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -66,16 +68,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition.</returns>
-        public static T SingleF<T>(this T[] source, Func<T, bool> predicate)
+        public static T SingleQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -86,7 +88,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];
@@ -99,7 +101,8 @@
                 return result;
             }
             
-            throw ThrowHelper.NoMatch();
+            ThrowHelper.ThrowInvalidOperationException("Sequence contains no matching elements");
+            return default;
         }
 
         /// <summary>
@@ -109,16 +112,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition or default value if no such element is found.</returns>
-        public static T SingleOrDefaultF<T>(this T[] source, Func<T, bool> predicate)
+        public static T SingleOrDefaultQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
           
 
@@ -130,7 +133,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];
@@ -148,21 +151,21 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence or default if no elements exist.</returns>
-        public static T SingleF<T>(this Span<T> source)
+        public static T SingleQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
-
+            
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             if (source.Length > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -173,21 +176,21 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence</returns>
-        public static T SingleOrDefaultF<T>(this Span<T> source)
+        public static T SingleOrDefaultQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
-
+            
             if (source.Length == 0)
             {
-                return default(T);
+                return default;
             }
 
             if (source.Length > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -199,16 +202,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition.</returns>
-        public static T SingleF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T SingleQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -219,7 +222,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];
@@ -232,7 +235,8 @@
                 return result;
             }
             
-            throw ThrowHelper.NoMatch();
+            ThrowHelper.ThrowInvalidOperationException("Sequence contains no matching elements");
+            return default;
         }
 
         /// <summary>
@@ -242,16 +246,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition or default value if no such element is found.</returns>
-        public static T SingleOrDefaultF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T SingleOrDefaultQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
 
@@ -263,7 +267,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];
@@ -281,21 +285,22 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence</returns>
-        public static T SingleF<T>(this List<T> source)
+        public static T SingleQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
+            
 
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
-            if (source.Count > 1) 
+            if (source.Count > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -306,11 +311,11 @@
         /// </summary>        
         /// <param name="source">A sequence to return the single element of</param>
         /// <returns>The single element of the input sequence or default if no elements exist.</returns>
-        public static T SingleOrDefaultF<T>(this List<T> source)
+        public static T SingleOrDefaultQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (source.Count == 0)
@@ -318,9 +323,9 @@
                 return default;
             }
 
-            if (source.Count > 1) 
+            if (source.Count > 1)
             {
-                throw ThrowHelper.MoreThanOneElement();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element");
             }
 
             return source[0];
@@ -332,16 +337,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition.</returns>
-        public static T SingleF<T>(this List<T> source, Func<T, bool> predicate)
+        public static T SingleQ<T>(this List<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -352,7 +357,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];
@@ -365,7 +370,8 @@
                 return result;
             }
             
-            throw ThrowHelper.NoMatch();
+            ThrowHelper.ThrowInvalidOperationException("Sequence contains no matching elements");
+            return default;
         }
 
         /// <summary>
@@ -375,16 +381,16 @@
         /// <param name="source">A sequence to return a single element from.</param>
         /// <param name="predicate">A function to test an element for a condition.</param>
         /// <returns>The single element of the input sequence that satisfies a condition or default value if no such element is found.</returns>
-        public static T SingleOrDefaultF<T>(this List<T> source, Func<T, bool> predicate)
+        public static T SingleOrDefaultQ<T>(this List<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = default(T);
@@ -395,7 +401,7 @@
                 {
                     if (foundMatch)
                     {
-                        throw ThrowHelper.MoreThanOneMatch();
+                        ThrowHelper.ThrowInvalidOperationException("Sequence contains more than one matching element.");
                     }
 
                     result = source[i];

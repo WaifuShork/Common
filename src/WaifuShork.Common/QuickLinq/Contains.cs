@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -18,11 +19,11 @@
         /// <param name="value">The value to locate.</param>
         /// <param name="comparer">An equality comparer to compare values.</param>
         /// <returns>true if the source sequence contains an element that has the specified value; otherwise, false.</returns>
-        public static bool ContainsF<TSource>(this TSource[] source, TSource value, IEqualityComparer<TSource> comparer = null)
+        public static bool ContainsQ<TSource>(this TSource[] source, TSource value, IEqualityComparer<TSource> comparer = null)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (comparer == null)
@@ -51,11 +52,11 @@
         /// <param name="value">The value to locate.</param>
         /// <param name="comparer">An equality comparer to compare values.</param>
         /// <returns>true if the source sequence contains an element that has the specified value; otherwise, false.</returns>
-        public static bool ContainsF<TSource>(this Span<TSource> source, TSource value, IEqualityComparer<TSource> comparer = null)
+        public static bool ContainsQ<TSource>(this Span<TSource> source, TSource value, IEqualityComparer<TSource> comparer = null)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));            
             }
 
             if (comparer == null)
@@ -85,11 +86,11 @@
         /// <param name="value">The value to locate.</param>
         /// <param name="comparer">An equality comparer to compare values.</param>
         /// <returns>true if the source sequence contains an element that has the specified value; otherwise, false.</returns>
-        public static bool ContainsF<TSource>(this List<TSource> source, TSource value, IEqualityComparer<TSource> comparer = null)
+        public static bool ContainsQ<TSource>(this List<TSource> source, TSource value, IEqualityComparer<TSource> comparer = null)
         {            
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (comparer == null)

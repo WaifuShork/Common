@@ -14,7 +14,7 @@
 		/// <param name="element">The value to be repeated.</param>
 		/// <param name="count">The number of times to repeat the value in the generated sequence.</param>
 		/// <returns>A sequence that contains a repeated value</returns>
-		public static T[] RepeatArrayF<T>(T element, int count)
+		public static T[] RepeatArrayQ<T>(T element, int count)
 		{
 			var result = new T[count];
 			for (var i = 0; i < result.Length; i++)
@@ -32,7 +32,7 @@
 		/// <param name="element">The value to be repeated.</param>
 		/// <param name="count">The number of times to repeat the value in the generated sequence.</param>
 		/// <returns>A sequence that contains a repeated value</returns>
-		public static List<T> RepeatListF<T>(T element, int count)
+		public static List<T> RepeatListQ<T>(T element, int count)
 		{
 			var result = new List<T>(count);
 			for (var i = 0; i < count; i++)

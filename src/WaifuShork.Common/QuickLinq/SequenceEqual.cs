@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -17,7 +18,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>     
-        public static bool SequenceEqualF<T>(this T[] first, T[] second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this T[] first, T[] second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -26,12 +27,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Length != second.Length)
@@ -63,18 +64,17 @@
         /// <param name="second">A sequence to compare to first.</param>
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>An array of integers, where the value corresponds to IComparer.Compare indicating less than, greater than, or equals</returns>     
-        public static int[] SequenceCompareF<T>(this T[] first, T[] second, IComparer<T> comparer = null)
+        public static int[] SequenceCompareQ<T>(this T[] first, T[] second, IComparer<T> comparer = null)
         {
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
-
             if (comparer == null)
             {
                 comparer = Comparer<T>.Default;
@@ -82,7 +82,7 @@
 
             if (first.Length != second.Length)
             {
-                throw ThrowHelper.NotSupported();
+                ThrowHelper.ThrowNotSupportedException();
             }
 
             var result = new int[first.Length];
@@ -104,7 +104,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>
-        public static bool SequenceEqualF<T>(this T[] first, List<T> second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this T[] first, List<T> second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -113,12 +113,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Length != second.Count)
@@ -146,7 +146,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>
-        public static bool SequenceEqualF<T>(this List<T> first, T[] second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this List<T> first, T[] second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -155,12 +155,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Count != second.Length)
@@ -189,7 +189,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>     
-        public static bool SequenceEqualF<T>(this Span<T> first, Span<T> second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this Span<T> first, Span<T> second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -198,12 +198,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Length != second.Length)
@@ -238,7 +238,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>
-        public static bool SequenceEqualF<T>(this Span<T> first, List<T> second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this Span<T> first, List<T> second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -247,12 +247,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Length != second.Count)
@@ -280,7 +280,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>
-        public static bool SequenceEqualF<T>(this List<T> first, Span<T> second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this List<T> first, Span<T> second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -289,12 +289,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Count != second.Length)
@@ -324,7 +324,7 @@
         /// <param name="comparer">An optional Comparer to use for the comparison.</param>
         /// <returns>true of the two sources are of equal length and their corresponding 
         /// elements are equal according to the equality comparer. Otherwise, false.</returns>
-        public static bool SequenceEqualF<T>(this List<T> first, List<T> second, IEqualityComparer<T> comparer = null)
+        public static bool SequenceEqualQ<T>(this List<T> first, List<T> second, IEqualityComparer<T> comparer = null)
         {
             if (comparer == null)
             {
@@ -333,12 +333,12 @@
 
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
 
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
 
             if (first.Count != second.Count)

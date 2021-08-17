@@ -1,8 +1,8 @@
 ﻿namespace WaifuShork.Common.QuickLinq
 {
 	using System;
-	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -15,19 +15,19 @@
         /// <param name="second">The second sequence to merge.</param>
         /// <param name="selector">A function that specifies how to merge the elements from the two sequences.</param>
         /// <returns>A sequence that contains merged elements of two input sequences.</returns>
-        public static R[] ZipF<T, U, R>(this T[] first, U[] second, Func<T, U, R> selector)
+        public static R[] ZipQ<T, U, R>(this T[] first, U[] second, Func<T, U, R> selector)
         {
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             // maintain array bounds elision
@@ -60,19 +60,19 @@
         /// <param name="second">The second sequence to merge.</param>
         /// <param name="selector">A function that specifies how to merge the elements from the two sequences.</param>
         /// <returns>A sequence that contains merged elements of two input sequences.</returns>
-        public static R[] ZipF<T, U, R>(this Span<T> first, Span<U> second, Func<T, U, R> selector)
+        public static R[] ZipQ<T, U, R>(this Span<T> first, Span<U> second, Func<T, U, R> selector)
         {
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             // maintain array bounds elision
@@ -104,21 +104,19 @@
         /// <param name="second">The second sequence to merge.</param>
         /// <param name="selector">A function that specifies how to merge the elements from the two sequences.</param>
         /// <returns>A sequence that contains merged elements of two input sequences.</returns>
-        public static List<R> ZipF<T, U, R>(this List<T> first, List<U> second, Func<T, U, R> selector)
+        public static List<R> ZipQ<T, U, R>(this List<T> first, List<U> second, Func<T, U, R> selector)
         {
             if (first == null)
             {
-                throw ThrowHelper.ArgumentNull("first");
+                ThrowHelper.ThrowArgumentNullException(nameof(first));
             }
-
             if (second == null)
             {
-                throw ThrowHelper.ArgumentNull("second");
+                ThrowHelper.ThrowArgumentNullException(nameof(second));
             }
-
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             // maintain array bounds elision

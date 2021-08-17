@@ -1,8 +1,8 @@
 ﻿namespace WaifuShork.Common.QuickLinq
 {
-	using Utilities;
 	using System.Collections.Generic;
-    
+	using Microsoft.Toolkit.Diagnostics;
+	
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
 	public static partial class QuickLinq
@@ -13,12 +13,12 @@
 		/// <param name="start">The value of the first integer in the sequence.</param>
 		/// <param name="count">The number of sequential integers to generate.</param>
 		/// <returns>A sequence that contains a range of sequential integral numbers.</returns>
-		public static int[] RangeArrayF(int start, int count)
+		public static int[] RangeArrayQ(int start, int count)
 		{
 			var max = ((long)start) + count - 1;
 			if (count < 0 || max > int.MaxValue)
 			{
-				throw ThrowHelper.ArgumentOutOfRange("count");
+				ThrowHelper.ThrowArgumentOutOfRangeException(nameof(count));
 			}
 			
 			var result = new int[count];
@@ -36,12 +36,12 @@
 		/// <param name="start">The value of the first integer in the sequence.</param>
 		/// <param name="count">The number of sequential integers to generate.</param>
 		/// <returns>A sequence that contains a range of sequential integral numbers.</returns>
-		public static List<int> RangeListF(int start, int count)
+		public static List<int> RangeListQ(int start, int count)
 		{
 			var max = ((long)start) + count - 1;
 			if (count < 0 || max > int.MaxValue)
 			{
-				throw ThrowHelper.ArgumentOutOfRange("count");
+				ThrowHelper.ThrowArgumentOutOfRangeException(nameof(count));
 			}
 			
 			var result = new List<int>(count);

@@ -1,7 +1,9 @@
 using Xunit;
 using System.Linq;
+using System.Threading;
 using Xunit.Abstractions;
 using System.Collections.Generic;
+using WaifuShork.Common.QuickLinq;
 using WaifuShork.Common.Extensions;
 using System.Runtime.InteropServices;
 
@@ -14,6 +16,26 @@ namespace WaifuShork.Common.Tests
 		public ConcurrentListTests(ITestOutputHelper output)
 		{
 			this._output = output;
+		}
+
+		[Fact]
+		public void Test_Concurrent_IsThreadSafe()
+		{
+			var list = new ConcurrentList<int>(Enumerable.Range(0, 100));
+
+			var thread = new Thread(() =>
+			{
+				list[12] = 42;
+			});
+
+			var thread2 = new Thread(() =>
+			{
+				list[12] = 2;
+			});
+			thread.Start();
+			thread2.Start();
+
+			Assert.Equal(2, list[12]);
 		}
 		
 		[Fact]
@@ -110,11 +132,27 @@ namespace WaifuShork.Common.Tests
 
 			var clone = buffer.DeepClone();
 
-			Assert.Equal(buffer, clone);
+			Assert.True(buffer.DeepEquals(clone));
+			
+			// Refs should be different
+			Assert.NotEqual(buffer, clone);
+			
 			Assert.Equal(100, buffer.Capacity);
 			
 			buffer.GrowBy(100);
 			Assert.Equal(200, buffer.Capacity);
+		}
+
+		[Fact]
+		public void Test_ConcatQ()
+		{
+			var arr1 = new List<int>(Enumerable.Range(0, 100)).ToArray();
+			var arr2 = new List<int>(Enumerable.Range(0, 100)).ToArray();
+
+			var assert = arr1.Concat(arr2).ToArray();
+			var concat = arr1.ConcatQ(arr2);
+
+			Assert.Equal(assert, concat);
 		}
 	}
 }

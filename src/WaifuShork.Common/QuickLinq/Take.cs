@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -14,11 +15,11 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="count">The number of elements to return.</param>
         /// <returns>A sequence that contains the specified number of elements from the start of the input sequence.</returns>
-        public static T[] TakeF<T>(this T[] source, int count)
+        public static T[] TakeQ<T>(this T[] source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (count < 0)
             {
@@ -40,15 +41,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static T[] TakeWhileF<T>(this T[] source, Func<T, bool> predicate)
+        public static T[] TakeWhileQ<T>(this T[] source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -70,15 +71,15 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="predicate">A function to test each source element for a condition; the second parameter of the function represents the index of the source element.</param>
         /// <returns>A sequence that contains elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static T[] TakeWhileF<T>(this T[] source, Func<T,int, bool> predicate)
+        public static T[] TakeWhileQ<T>(this T[] source, Func<T,int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -101,11 +102,11 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="count">The number of elements to return.</param>
         /// <returns>A sequence that contains the specified number of elements from the start of the input sequence.</returns>
-        public static T[] TakeF<T>(this Span<T> source, int count)
+        public static T[] TakeQ<T>(this Span<T> source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (count < 0)
             {
@@ -132,15 +133,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static T[] TakeWhileF<T>(this Span<T> source, Func<T, bool> predicate)
+        public static T[] TakeWhileQ<T>(this Span<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -165,15 +166,15 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="predicate">A function to test each source element for a condition; the second parameter of the function represents the index of the source element.</param>
         /// <returns>A sequence that contains elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static T[] TakeWhileF<T>(this Span<T> source, Func<T, int, bool> predicate)
+        public static T[] TakeWhileQ<T>(this Span<T> source, Func<T, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var count = 0;
@@ -201,11 +202,11 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="count">The number of elements to return.</param>
         /// <returns>A sequence that contains the specified number of elements from the start of the input sequence.</returns>
-        public static List<T> TakeF<T>(this List<T> source, int count)
+        public static List<T> TakeQ<T>(this List<T> source, int count)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (count < 0)
             {
@@ -230,15 +231,15 @@
         /// <param name="source">A sequence to return elements from.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
         /// <returns>A sequence that contains the elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static List<T> TakeWhileF<T>(this List<T> source, Func<T, bool> predicate)
+        public static List<T> TakeWhileQ<T>(this List<T> source, Func<T, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new List<T>();
@@ -263,15 +264,15 @@
         /// <param name="source">The sequence to return elements from.</param>
         /// <param name="predicate">A function to test each source element for a condition; the second parameter of the function represents the index of the source element.</param>
         /// <returns>A sequence that contains elements from the input sequence that occur before the element at which the test no longer passes.</returns>
-        public static List<T> TakeWhileF<T>(this List<T> source, Func<T, int, bool> predicate)
+        public static List<T> TakeWhileQ<T>(this List<T> source, Func<T, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new List<T>();

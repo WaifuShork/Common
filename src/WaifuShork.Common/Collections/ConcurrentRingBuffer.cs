@@ -1,22 +1,19 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace WaifuShork.Common
+﻿namespace WaifuShork.Common
 {
     using System;
     using QuickLinq;
-    using Utilities;
     using Extensions;
     using System.Linq;
     using System.Collections;
     using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	/// <summary>
-    /// A circular buffer collection.
+    /// A circular buffer collection with full thread-safety
     /// </summary>
     /// <typeparam name="T">Type of elements within this ring buffer.</typeparam>
     [Serializable]
-	public class ConcurrentRingBuffer<T> : ICollection<T>, IDeepEquatable<ConcurrentRingBuffer<T>>
+	public class ConcurrentRingBuffer<T> : ICollection<T>, IEquatable<ConcurrentRingBuffer<T>>
     {
         private readonly object _syncLock = new();
         private bool _reachedEnd;
@@ -30,7 +27,7 @@ namespace WaifuShork.Common
         {
             if (size <= 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), "Size must be positive.");
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), $"Cannot initialize a negatively sized ConcurrentRingBuffer<{typeof(T)}>");
             }
 
             this.CurrentIndex = 0;
@@ -45,20 +42,26 @@ namespace WaifuShork.Common
         /// <param name="index">Starting element index.</param>
         /// <exception cref="ArgumentException" />
         /// <exception cref="ArgumentOutOfRangeException" />
-        public ConcurrentRingBuffer(T[] elements, int index = 0)
+        public ConcurrentRingBuffer(IEnumerable<T> elements, int index = 0)
         {
-            if (!elements.AnyF())
+            if (elements == null)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(elements), "Cannot create a RingBuffer with no elements");    
+                ThrowHelper.ThrowArgumentNullException(nameof(elements), $"Cannot initialize a ConcurrentRingBuffer<{typeof(T)}> from a null collection of {typeof(T)}");
+            }
+
+            var elementCollection = elements.ToArray();
+            if (!elementCollection.AnyQ())
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(elements), $"Cannot initialize a ConcurrentRingBuffer<{typeof(T)}> from an empty collection of {typeof(T)}");    
             }
             
             this.CurrentIndex = index;
-            this.InternalBuffer = elements.DeepClone();
+            this.InternalBuffer = elementCollection.DeepClone();
             this.Capacity = this.InternalBuffer.Length;
 
             if (this.CurrentIndex >= this.InternalBuffer.Length || this.CurrentIndex < 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(index), "Index must be less than buffer capacity, and greater than zero.");
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(index), "Initialization index must be less than buffer's capacity, and cannot be negative.");
             }
         }
         
@@ -158,14 +161,17 @@ namespace WaifuShork.Common
         }
 
         /// <summary>
-        /// Checks whether given item is present in the buffer. This method is not implemented. Use <see cref="Contains(Func{T, bool})"/> instead.
+        /// Checks whether given item is present in the buffer. This method is not implemented. Use <see cref="Contains(T)"/> instead.
         /// </summary>
         /// <param name="item">Item to check for.</param>
         /// <returns>Whether the buffer contains the item.</returns>
         /// <exception cref="NotImplementedException" />
         public bool Contains(T item)
         {
-            throw new NotImplementedException("This method is not implemented. Use .Contains(predicate) instead.");
+            lock (this._syncLock)
+            {
+                return this.InternalBuffer.ContainsQ(item);
+            }
         }
 
         /// <summary>
@@ -177,7 +183,7 @@ namespace WaifuShork.Common
         {
             lock (this._syncLock)
             {
-                return this.InternalBuffer.AnyF(predicate);
+                return this.InternalBuffer.AnyQ(predicate);
             }
         }
 
@@ -209,13 +215,25 @@ namespace WaifuShork.Common
         }
 
         /// <summary>
-        /// Removes an item from the buffer. This method is not implemented. Use <see cref="Remove(Func{T, bool})"/> instead.
+        /// Removes an item from the buffer. This method is not implemented. Use <see cref="Remove(T)"/> instead.
         /// </summary>
         /// <param name="item">Item to remove.</param>
         /// <returns>Whether an item was removed or not.</returns>
         public bool Remove(T item)
         {
-            throw new NotImplementedException("This method is not implemented. Use .Remove(predicate) instead.");
+            lock (this._syncLock)
+            {
+                for (var i = 0; i < this.InternalBuffer.Length; i++)
+                {
+                    if (this.InternalBuffer[i].Equals(item))
+                    {
+                        this.InternalBuffer[i] = default;
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -252,8 +270,8 @@ namespace WaifuShork.Common
                 {
                     return this.InternalBuffer.AsEnumerable().GetEnumerator();
                 }
-                return this.InternalBuffer.SkipF(this.CurrentIndex)
-                    .Concat(this.InternalBuffer.TakeF(this.CurrentIndex))
+                return this.InternalBuffer.SkipQ(this.CurrentIndex)
+                    .Concat(this.InternalBuffer.TakeQ(this.CurrentIndex))
                     .GetEnumerator();
             }
         }
@@ -276,20 +294,7 @@ namespace WaifuShork.Common
         {
             return new(collection.ToArray());
         }
-
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"ConcurrentRingBuffer<{typeof(T)}>");
-			
-            for (var i = 0; i < this.Count; i++)
-            {
-                sb.AppendLine($"{this.InternalBuffer[i]}");
-            }
-
-            return sb.ToString();
-        }
-
+        
         public bool Equals(ConcurrentRingBuffer<T> other)
         {
             if (ReferenceEquals(null, other))

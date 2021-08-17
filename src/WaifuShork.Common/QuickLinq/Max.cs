@@ -1,4 +1,6 @@
-﻿namespace WaifuShork.Common.QuickLinq
+﻿using Microsoft.Toolkit.Diagnostics;
+
+namespace WaifuShork.Common.QuickLinq
 {
 	using System;
 	using Utilities;
@@ -15,15 +17,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static T MaxF<T>(this T[] source)
+        public static T MaxQ<T>(this T[] source)
         {            
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<T>.Default;
@@ -59,19 +61,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static TResult MaxF<T, TResult>(this T[] source, Func<T, TResult> selector)
+        public static TResult MaxQ<T, TResult>(this T[] source, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<TResult>.Default;
@@ -108,15 +110,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static int MaxF(this int[] source)
+        public static int MaxQ(this int[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = int.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -135,19 +137,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static int MaxF<T>(this T[] source, Func<T, int> selector)
+        public static int MaxQ<T>(this T[] source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = int.MinValue;
@@ -167,15 +169,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static long MaxF(this long[] source)
+        public static long MaxQ(this long[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             
             var r = long.MinValue;
@@ -196,19 +198,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static long MaxF<T>(this T[] source, Func<T, long> selector)
+        public static long MaxQ<T>(this T[] source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = long.MinValue;
@@ -228,15 +230,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static float MaxF(this float[] source)
+        public static float MaxQ(this float[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             
             var r = source[0];
@@ -265,19 +267,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static float MaxF<T>(this T[] source, Func<T, float> selector)
+        public static float MaxQ<T>(this T[] source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = selector(source[0]);
@@ -307,15 +309,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static double MaxF(this double[] source)
+        public static double MaxQ(this double[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = source[0];
             var startIndex = 0;
@@ -343,19 +345,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static double MaxF<T>(this T[] source, Func<T, double> selector)
+        public static double MaxQ<T>(this T[] source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = selector(source[0]);
@@ -386,15 +388,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static decimal MaxF(this decimal[] source)
+        public static decimal MaxQ(this decimal[] source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -413,19 +415,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static decimal MaxF<T>(this T[] source, Func<T, decimal> selector)
+        public static decimal MaxQ<T>(this T[] source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -446,15 +448,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static T MaxF<T>(this Span<T> source)
+        public static T MaxQ<T>(this Span<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<T>.Default;
@@ -490,19 +492,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static TResult MaxF<T, TResult>(this Span<T> source, Func<T, TResult> selector)
+        public static TResult MaxQ<T, TResult>(this Span<T> source, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<TResult>.Default;
@@ -539,15 +541,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static int MaxF(this Span<int> source)
+        public static int MaxQ(this Span<int> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = int.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -566,19 +568,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static int MaxF<T>(this Span<T> source, Func<T, int> selector)
+        public static int MaxQ<T>(this Span<T> source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = int.MinValue;
@@ -598,15 +600,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static long MaxF(this Span<long> source)
+        public static long MaxQ(this Span<long> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = long.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -626,19 +628,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static long MaxF<T>(this Span<T> source, Func<T, long> selector)
+        public static long MaxQ<T>(this Span<T> source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = long.MinValue;
@@ -658,15 +660,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static float MaxF(this Span<float> source)
+        public static float MaxQ(this Span<float> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             
             var r = source[0];
@@ -695,19 +697,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static float MaxF<T>(this Span<T> source, Func<T, float> selector)
+        public static float MaxQ<T>(this Span<T> source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = selector(source[0]);
@@ -737,15 +739,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static double MaxF(this Span<double> source)
+        public static double MaxQ(this Span<double> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = source[0];
             var startIndex = 0;
@@ -773,19 +775,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static double MaxF<T>(this Span<T> source, Func<T, double> selector)
+        public static double MaxQ<T>(this Span<T> source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = selector(source[0]);
@@ -816,15 +818,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static decimal MaxF(this Span<decimal> source)
+        public static decimal MaxQ(this Span<decimal> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -843,19 +845,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static decimal MaxF<T>(this Span<T> source, Func<T, decimal> selector)
+        public static decimal MaxQ<T>(this Span<T> source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Length == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Length; i++)
@@ -876,15 +878,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static T MaxF<T>(this List<T> source)
+        public static T MaxQ<T>(this List<T> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<T>.Default;
@@ -920,21 +922,21 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static TResult MaxF<T, TResult>(this List<T> source, Func<T, TResult> selector)
+        public static TResult MaxQ<T, TResult>(this List<T> source, Func<T, TResult> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
 
             var comparer = Comparer<TResult>.Default;
@@ -972,15 +974,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static int MaxF(this List<int> source)
+        public static int MaxQ(this List<int> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = int.MinValue;
             for (var i = 0; i < source.Count; i++)
@@ -999,19 +1001,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static int MaxF<T>(this List<T> source, Func<T, int> selector)
+        public static int MaxQ<T>(this List<T> source, Func<T, int> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var r = int.MinValue;
@@ -1031,15 +1033,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static long MaxF(this List<long> source)
+        public static long MaxQ(this List<long> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = long.MinValue;
             for (var i = 0; i < source.Count; i++)
@@ -1058,19 +1060,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static long MaxF<T>(this List<T> source, Func<T, long> selector)
+        public static long MaxQ<T>(this List<T> source, Func<T, long> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             var r = long.MinValue;
             for (var i = 0; i < source.Count; i++)
@@ -1089,15 +1091,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static float MaxF(this List<float> source)
+        public static float MaxQ(this List<float> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = source[0];
             var startIndex = 0;
@@ -1125,19 +1127,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static float MaxF<T>(this List<T> source, Func<T, float> selector)
+        public static float MaxQ<T>(this List<T> source, Func<T, float> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
             var r = selector(source[0]);
             var startIndex = 0;
@@ -1166,15 +1168,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static double MaxF(this List<double> source)
+        public static double MaxQ(this List<double> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = source[0];
             var startIndex = 0;
@@ -1202,19 +1204,19 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static double MaxF<T>(this List<T> source, Func<T, double> selector)
+        public static double MaxQ<T>(this List<T> source, Func<T, double> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
             var r = selector(source[0]);
             var startIndex = 0;
@@ -1243,15 +1245,15 @@
         /// </summary>        
         /// <param name="source">A sequence of values to determine the maximum of.</param>
         /// <returns>The maximum value in the sequence</returns>
-        public static decimal MaxF(this List<decimal> source)
+        public static decimal MaxQ(this List<decimal> source)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Count; i++)
@@ -1270,15 +1272,15 @@
         /// <param name="source">A sequence of values to determine the maximum value of.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>The maximum value in the transform of the sequence.</returns>
-        public static decimal MaxF<T>(this List<T> source, Func<T, decimal> selector)
+        public static decimal MaxQ<T>(this List<T> source, Func<T, decimal> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
             if (source.Count == 0)
             {
-                throw ThrowHelper.NoElements();
+                ThrowHelper.ThrowInvalidOperationException("Sequence contains no elements.");
             }
             var r = decimal.MinValue;
             for (var i = 0; i < source.Count; i++)

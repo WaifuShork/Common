@@ -1,8 +1,8 @@
-﻿namespace WaifuShork.Common.Utilities
+﻿namespace WaifuShork.Common.Extensions
 {
 	using System;
 	
-	internal static class SliceExtensions
+	public static class SliceExtensions
 	{
 		public static Span<T> Slice<T>(this T[] array, int start, int length)
 		{

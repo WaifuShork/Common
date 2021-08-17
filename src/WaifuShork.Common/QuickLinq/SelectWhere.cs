@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -18,16 +19,16 @@
         /// <param name="selector">The transformation to apply before filtering.</param>
         /// <param name="predicate">The predicate with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate.</returns>
-        public static TResult[] SelectWhereF<T, TResult>(this T[] source, Func<T, TResult> selector, Func<TResult, bool> predicate)
+        public static TResult[] SelectWhereQ<T, TResult>(this T[] source, Func<T, TResult> selector, Func<TResult, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new TResult[source.Length];
@@ -53,16 +54,16 @@
         /// <param name="selector">The transformation with index to apply before filtering.</param>
         /// <param name="predicate">The predicate with index with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate with indexes.</returns>
-        public static TResult[] SelectWhereF<T, TResult>(this T[] source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
+        public static TResult[] SelectWhereQ<T, TResult>(this T[] source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new TResult[source.Length];
@@ -90,18 +91,17 @@
         /// <param name="selector">The transformation to apply before filtering.</param>
         /// <param name="predicate">The predicate with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate.</returns>
-        public static TResult[] SelectWhereF<T, TResult>(this Span<T> source, Func<T, TResult> selector, Func<TResult, bool> predicate)
+        public static TResult[] SelectWhereQ<T, TResult>(this Span<T> source, Func<T, TResult> selector, Func<TResult, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
-
             var result = new TResult[source.Length];
             var idx = 0;
             for (var i = 0; i < source.Length; i++)
@@ -125,16 +125,16 @@
         /// <param name="selector">The transformation with index to apply before filtering.</param>
         /// <param name="predicate">The predicate with index with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate with indexes.</returns>
-        public static TResult[] SelectWhereF<T, TResult>(this Span<T> source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
+        public static TResult[] SelectWhereQ<T, TResult>(this Span<T> source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var result = new TResult[source.Length];
@@ -162,16 +162,16 @@
         /// <param name="selector">The transformation to apply before filtering.</param>
         /// <param name="predicate">The predicate with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate.</returns>
-        public static List<TResult> SelectWhereF<T, TResult>(this List<T> source, Func<T, TResult> selector, Func<TResult, bool> predicate)
+        public static List<TResult> SelectWhereQ<T, TResult>(this List<T> source, Func<T, TResult> selector, Func<TResult, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var r = new List<TResult>();
@@ -194,16 +194,16 @@
         /// <param name="selector">The transformation with index to apply before filtering.</param>
         /// <param name="predicate">The predicate with index with which to filter result.</param>
         /// <returns>A sequence transformed and then filtered by selector and predicate with indexes.</returns>
-        public static List<TResult> SelectWhereF<T, TResult>(this List<T> source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
+        public static List<TResult> SelectWhereQ<T, TResult>(this List<T> source, Func<T, int, TResult> selector, Func<TResult, int, bool> predicate)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (predicate == null)
             {
-                throw ThrowHelper.ArgumentNull("predicate");
+                ThrowHelper.ThrowArgumentNullException(nameof(predicate));
             }
 
             var r = new List<TResult>();

@@ -3,6 +3,7 @@
 	using System;
 	using Utilities;
 	using System.Collections.Generic;
+    using Microsoft.Toolkit.Diagnostics;
     
 	// ReSharper disable LoopCanBeConvertedToQuery
 	// ReSharper disable ForCanBeConvertedToForeach
@@ -17,18 +18,17 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
-        public static TResult[] SelectManyF<TSource, TResult>(this TSource[] source, Func<TSource, TResult[]> selector)
+        public static TResult[] SelectManyQ<TSource, TResult>(this TSource[] source, Func<TSource, TResult[]> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
-
             var result = new List<TResult>(source.Length);
             for (var i = 0; i < source.Length; i++)
             {
@@ -48,16 +48,16 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element and it's index.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element and index of the input sequence.</returns>
-        public static TResult[] SelectManyF<TSource, TResult>(this TSource[] source, Func<TSource, int, TResult[]> selector)
+        public static TResult[] SelectManyQ<TSource, TResult>(this TSource[] source, Func<TSource, int, TResult[]> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new List<TResult>(source.Length);
@@ -81,16 +81,16 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
-        public static TResult[] SelectManyF<TSource, TResult>(this Span<TSource> source, Func<TSource, TResult[]> selector)
+        public static TResult[] SelectManyQ<TSource, TResult>(this Span<TSource> source, Func<TSource, TResult[]> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new List<TResult>(source.Length);
@@ -112,16 +112,16 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element and it's index.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element and index of the input sequence.</returns>
-        public static TResult[] SelectManyF<TSource, TResult>(this Span<TSource> source, Func<TSource, int, TResult[]> selector)
+        public static TResult[] SelectManyQ<TSource, TResult>(this Span<TSource> source, Func<TSource, int, TResult[]> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new List<TResult>(source.Length);
@@ -144,16 +144,16 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
-        public static List<TResult> SelectManyF<TSource, TResult>(this List<TSource> source, Func<TSource, List<TResult>> selector)
+        public static List<TResult> SelectManyQ<TSource, TResult>(this List<TSource> source, Func<TSource, List<TResult>> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new List<TResult>(source.Count);
@@ -175,16 +175,16 @@
         /// <param name="source">A sequence of values to project.</param>
         /// <param name="selector">A transform function to apply to each element and it's index.</param>
         /// <returns>A sequence whose elements are the result of invoking the one-to-many transform function on each element and index of the input sequence.</returns>
-        public static List<TResult> SelectManyF<TSource, TResult>(this List<TSource> source, Func<TSource, int, List<TResult>> selector)
+        public static List<TResult> SelectManyQ<TSource, TResult>(this List<TSource> source, Func<TSource, int, List<TResult>> selector)
         {
             if (source == null)
             {
-                throw ThrowHelper.ArgumentNull("source");
+                ThrowHelper.ThrowArgumentNullException(nameof(source));
             }
 
             if (selector == null)
             {
-                throw ThrowHelper.ArgumentNull("selector");
+                ThrowHelper.ThrowArgumentNullException(nameof(selector));
             }
 
             var result = new List<TResult>(source.Count);
