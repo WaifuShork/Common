@@ -23,9 +23,10 @@
         /// <exception cref="ArgumentOutOfRangeException" />
         public RingBuffer(int size)
         {
+            // It doesn't make sense to allocate a zero-sized ring buffer since they don't grow in size 
             if (size <= 0)
             {
-                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), $"Cannot initialize a negatively sized RingBuffer<{typeof(T)}>");
+                ThrowHelper.ThrowArgumentOutOfRangeException(nameof(size), $"Cannot initialize a negative or zero-sized RingBuffer<{typeof(T)}>.");
             }
 
             this.CurrentIndex = 0;
@@ -46,8 +47,8 @@
             if (elements == null)
             {
                 ThrowHelper.ThrowArgumentNullException(nameof(elements), $"Cannot initialize a RingBuffer<{typeof(T)}> from a null collection of {typeof(T)}");
-            }
-
+            } 
+            
             var elementCollection = elements.ToArray();
             if (!elementCollection.AnyQ())
             {
@@ -91,19 +92,7 @@
         /// </summary>
         // ReSharper disable once MemberCanBePrivate.Global
         protected T[] InternalBuffer { get; set; }
-
-        public void GrowBy(int amount)
-        {
-            var buffer = new T[Capacity + amount];
-            for (var i = 0; i < Capacity; i++)
-            {
-                buffer[i] = InternalBuffer[i];
-            }
-
-            InternalBuffer = buffer.DeepClone();
-            Capacity += amount;
-        }
-
+        
         /// <summary>
         /// Inserts an item into this ring buffer.
         /// </summary>
@@ -245,6 +234,7 @@
             {
                 return this.InternalBuffer.AsEnumerable().GetEnumerator();
             }
+            
             return this.InternalBuffer.SkipQ(this.CurrentIndex)
                     .Concat(this.InternalBuffer.TakeQ(this.CurrentIndex))
                     .GetEnumerator();
@@ -254,8 +244,11 @@
         /// Returns an enumerator for this ring buffer.
         /// </summary>
         /// <returns>Enumerator for this ring buffer.</returns>
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-        
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
         public static implicit operator List<T>(RingBuffer<T> collection)
         {
             return collection.InternalBuffer.ToList();

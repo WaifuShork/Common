@@ -19,26 +19,6 @@ namespace WaifuShork.Common.Tests
 		}
 
 		[Fact]
-		public void Test_Concurrent_IsThreadSafe()
-		{
-			var list = new ConcurrentList<int>(Enumerable.Range(0, 100));
-
-			var thread = new Thread(() =>
-			{
-				list[12] = 42;
-			});
-
-			var thread2 = new Thread(() =>
-			{
-				list[12] = 2;
-			});
-			thread.Start();
-			thread2.Start();
-
-			Assert.Equal(2, list[12]);
-		}
-		
-		[Fact]
 		public void Tests_Concurrent_WorksAsExpected()
 		{
 			var list = new List<int>(Enumerable.Range(0, 100));
@@ -52,12 +32,27 @@ namespace WaifuShork.Common.Tests
 		}
 
 		[Fact]
+		public void Tests_Concurrent_TryAdd()
+		{
+			var concurrentList = new ConcurrentList<int>(Enumerable.Range(0, 100));
+
+			if (concurrentList.TryAdd(12))
+			{
+				Assert.Equal(101, concurrentList.Count);	
+			}
+			else
+			{
+				Assert.Equal(100, concurrentList.Count);
+			}
+		}
+		
+		[Fact]
 		public void Test_Concurrent_ItemsNotNull()
 		{
-			var concurrentList = new ConcurrentList<int?>();
+			var concurrentList = new ConcurrentList<object>();
 			for (var i = 0; i < 100; i++)
 			{
-				concurrentList[i] = i;
+				concurrentList[i] = new object();
 			}
 
 			foreach (var item in concurrentList)
@@ -66,93 +61,23 @@ namespace WaifuShork.Common.Tests
 			}
 		}
 
-		private class Tester
-		{
-			public string FirstName { get; set; }
-			public string LastName { get; set; }
-			public int Age { get; set; }
-		}
-		
 		[Fact]
-		public void Test_DeepClone_Object()
+		public void Test_AddingItems()
 		{
-			var test = new Tester
+			var list = new ConcurrentList<string>();
+			list.Add("Hello world");
+			list.Add("Goodbye world");
+			list.Add("I'm doing fine thanks for asking");
+
+			for (var i = 0; i < 20; i++)
 			{
-				FirstName = "John",
-				LastName = "Doe",
-				Age = 53
-			};
-
-			var clone = test.DeepClone();
-
-			Assert.Equal(test.FirstName, clone.FirstName);
-			Assert.Equal(test.LastName, clone.LastName);
-			Assert.Equal(test.Age, clone.Age);
-
-			test.FirstName = "Doe";
-			test.LastName = "John";
-			Assert.NotEqual(test.FirstName, clone.FirstName);
-			Assert.NotEqual(test.LastName, clone.LastName);
-			
-			// Ensure References/Addresses aren't equal 
-			var testHandle = GCHandle.Alloc(test, GCHandleType.WeakTrackResurrection);
-			var cloneHandle = GCHandle.Alloc(clone, GCHandleType.WeakTrackResurrection);
-			Assert.NotEqual(testHandle, cloneHandle);
-			
-			var testAddress = GCHandle.ToIntPtr(testHandle).ToInt64();
-			var cloneAddress = GCHandle.ToIntPtr(cloneHandle).ToInt64();
-			Assert.NotEqual(testAddress, cloneAddress);
-			
-			var testFirstHandler = GCHandle.Alloc(test.LastName, GCHandleType.WeakTrackResurrection);
-			var cloneFirstHandler = GCHandle.Alloc(clone.LastName, GCHandleType.WeakTrackResurrection);
-			Assert.NotEqual(testFirstHandler, cloneFirstHandler);
-			
-			var testFirstAddress = GCHandle.ToIntPtr(testFirstHandler).ToInt64();
-			var cloneFirstAddress = GCHandle.ToIntPtr(cloneFirstHandler).ToInt64();
-			Assert.NotEqual(testFirstAddress, cloneFirstAddress);
-			
-			var testLastHandler = GCHandle.Alloc(test.LastName, GCHandleType.WeakTrackResurrection);
-			var cloneLastHandler = GCHandle.Alloc(clone.LastName, GCHandleType.WeakTrackResurrection);
-			Assert.NotEqual(testLastHandler, cloneLastHandler);
-			
-			var testLastAddress = GCHandle.ToIntPtr(testLastHandler).ToInt64();
-			var cloneLastAddress = GCHandle.ToIntPtr(cloneLastHandler).ToInt64();
-			
-			Assert.NotEqual(testLastAddress, cloneLastAddress);
-		}
-
-		[Fact]
-		public void Test_RingBuffer()
-		{
-			var buffer = new RingBuffer<int>(100);
-			for (var i = 0; i < buffer.Capacity; i++)
-			{
-				buffer.Add(i);
+				list.Add($"Number: {i * 20 + 12}");
 			}
-
-			var clone = buffer.DeepClone();
-
-			Assert.True(buffer.DeepEquals(clone));
 			
-			// Refs should be different
-			Assert.NotEqual(buffer, clone);
-			
-			Assert.Equal(100, buffer.Capacity);
-			
-			buffer.GrowBy(100);
-			Assert.Equal(200, buffer.Capacity);
-		}
+			Assert.NotNull(list);
 
-		[Fact]
-		public void Test_ConcatQ()
-		{
-			var arr1 = new List<int>(Enumerable.Range(0, 100)).ToArray();
-			var arr2 = new List<int>(Enumerable.Range(0, 100)).ToArray();
-
-			var assert = arr1.Concat(arr2).ToArray();
-			var concat = arr1.ConcatQ(arr2);
-
-			Assert.Equal(assert, concat);
+			Assert.NotEmpty(list);
+			Assert.Equal(23, list.Count);
 		}
 	}
 }

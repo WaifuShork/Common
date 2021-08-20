@@ -1,23 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Diagnostics.Tracing.Parsers.MicrosoftWindowsTCPIP;
-using WaifuShork.Common.Attributes;
-using WaifuShork.Common.Exceptions;
-using WaifuShork.Common.Extensions;
-using WaifuShork.Common.Formatters;
-using WaifuShork.Common.QuickLinq;
 
 namespace WaifuShork.Common.Benchmarks
 {
@@ -25,26 +12,14 @@ namespace WaifuShork.Common.Benchmarks
 	{
 		private static void Main(string[] args)
 		{
-			_ = BenchmarkRunner.Run<Benchmarks>(ManualConfig.Create(DefaultConfig.Instance).AddJob(Job.RyuJitX64));
-		}
-
-		private static void Remove(this ConcurrentDictionary<int, string> dict, string item)
-		{
-			for (var i = 0; i < dict.Count; i++)
-			{
-				var value = dict[i];
-				if (value == item)
-				{
-					dict.Remove(i, out _);
-				}
-			}
+			// _ = BenchmarkRunner.Run<Benchmarks>(ManualConfig.Create(DefaultConfig.Instance).AddJob(Job.RyuJitX64));
 		}
 	}
 	
 	// I use this purely as a testing environment for benchmarking new features,
 	// so leftover data is likely to linger as everything isn't implemented properly. 
 	[MemoryDiagnoser]
-	public class Benchmarks
+	public partial class Benchmarks
 	{
 		private List<int> _list;
 		private int[] _intArray;
@@ -57,8 +32,7 @@ namespace WaifuShork.Common.Benchmarks
 
 		public Benchmarks()
 		{
-
-            
+			
 		}
 
 		[GlobalSetup]

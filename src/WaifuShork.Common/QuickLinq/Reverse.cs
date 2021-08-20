@@ -47,6 +47,7 @@
             }
             return result;
         }
+        
         /// <summary>
         /// Inverts the order of the elements in a sequence in place.
         /// </summary>        

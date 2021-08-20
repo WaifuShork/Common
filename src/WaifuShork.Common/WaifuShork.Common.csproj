@@ -1,13 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <AssemblyName>WaifuShork.Common</AssemblyName>
+        <RootNamespace>WaifuShork.Common</RootNamespace>
+        <VersionPrefix>1.0.0</VersionPrefix>
+        <Optimize>true</Optimize>
+        <DebugType>embedded</DebugType>
+        <OutputType>library</OutputType>
         <TargetFramework>net5.0</TargetFramework>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <Title>WaifuShork.Common</Title>
+        <Description>Various extensions, types, and events that I use in my day to day programming.</Description>
+        <PackageTags>waifushork common utilities dotnet-core net5 csharp netcore</PackageTags>
+        <Authors>WaifuShork</Authors>
+        <PackageLicenseUrl>https://github.com/WaifuShork/Common/blob/master/LICENSE</PackageLicenseUrl>
+        <Company>WaifuShork</Company>
+        <PackageProjectUrl>https://github.com/WaifuShork/Common</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/WaifuShork/Common</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+    
     <ItemGroup>
       <PackageReference Include="Microsoft.Toolkit.Diagnostics" Version="7.0.2" />
-      <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

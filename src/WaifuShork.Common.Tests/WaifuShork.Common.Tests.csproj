@@ -23,4 +23,8 @@
       <ProjectReference Include="..\WaifuShork.Common\WaifuShork.Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="QuickLinqTests" />
+    </ItemGroup>
+
 </Project>

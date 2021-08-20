@@ -1,4 +1,6 @@
-﻿namespace WaifuShork.Common
+﻿using WaifuShork.Common.QuickLinq;
+
+namespace WaifuShork.Common
 {
 	using System;
 	using System.Linq;
@@ -13,21 +15,70 @@
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class ConcurrentList<T> : IList<T>, IReadOnlyList<T>, IEquatable<ConcurrentList<T>>
+	public class ConcurrentList<T> : IList<T>, IReadOnlyList<T>, IDeepEquatable<ConcurrentList<T>>
 	{
 		// It's not necessary to implement custom collection concurrency so this just uses a concurrent dictionary of
 		// <int, T> for indexing object. 
 		private readonly ConcurrentDictionary<int, T> _underlyingCollection;
+		private static int _defaultConcurrencyLevel => Environment.ProcessorCount;
 		
-		public ConcurrentList(IEnumerable<T> source)
-		{
-			this._underlyingCollection = new ConcurrentDictionary<int, T>();
-			this.PopulateCollectionInternal(source);
-		}
-
 		public ConcurrentList()
 		{
 			this._underlyingCollection = new ConcurrentDictionary<int, T>();
+		}
+
+		public ConcurrentList(int concurrencyLevel, int capacity)
+		{
+			if (capacity < 0)
+			{
+				ThrowHelper.ThrowArgumentOutOfRangeException(nameof(capacity), "Capacity cannot be a negative value.");
+			}
+
+			if (capacity == 0)
+			{
+				this._underlyingCollection = new ConcurrentDictionary<int, T>();
+			}
+			else
+			{
+				this._underlyingCollection = new ConcurrentDictionary<int, T>(concurrencyLevel, capacity);
+			}
+			
+		}
+		
+		public ConcurrentList(IEnumerable<T> collection)
+		{
+			if (collection == null)
+			{
+				ThrowHelper.ThrowArgumentNullException(nameof(collection), $"Cannot initialize ConcurrentList<{typeof(T)}> with a null collection of {typeof(T)}");
+			}
+
+			if (collection is ICollection<T> c)
+			{
+				var count = c.Count;
+				if (count == 0)
+				{
+					this._underlyingCollection = new ConcurrentDictionary<int, T>(_defaultConcurrencyLevel, 0);
+				}
+				else
+				{
+					this._underlyingCollection = new ConcurrentDictionary<int, T>();
+
+					foreach (var item in c)
+					{
+						this.Add(item);
+					}
+				}
+			}
+			else
+			{
+				this._underlyingCollection = new ConcurrentDictionary<int, T>(_defaultConcurrencyLevel, 0);
+
+				using var enumerator = collection.GetEnumerator();
+				while (enumerator.MoveNext())
+				{
+					this.Add(enumerator.Current);
+				}
+			}
 		}
 
 		public int Count => this._underlyingCollection.Count;
@@ -39,14 +90,41 @@
 			set => this._underlyingCollection[index] = value;
 		}
 
-		private void PopulateCollectionInternal(IEnumerable<T> source)
+		private static bool IsValueWriteAtomic()
 		{
-			var array = source.ToArray();
-			var size = array.Length;
-
-			for (var i = 0; i < size; i++)
+			// Section 12.6.6 of ECMA CLI explains which types can be read and written atomically without
+			// the risk of tearing. See https://www.ecma-international.org/publications/files/ECMA-ST/ECMA-335.pdf
+			if (!typeof(T).IsValueType ||
+			    typeof(T) == typeof(IntPtr) ||
+			    typeof(T) == typeof(UIntPtr))
 			{
-				this._underlyingCollection[i] = array[i];
+				return true;
+			}
+
+			switch (Type.GetTypeCode(typeof(T)))
+			{
+				case TypeCode.Boolean:
+				case TypeCode.Byte:
+				case TypeCode.SByte:
+				case TypeCode.Char:
+				case TypeCode.Int16:
+				case TypeCode.UInt16:
+				case TypeCode.Int32:
+				case TypeCode.UInt32:
+				case TypeCode.Single:
+				{
+					return true;
+				}
+				case TypeCode.Double:
+				case TypeCode.Int64:
+				case TypeCode.UInt64:
+				{
+					return IntPtr.Size == 8;
+				}
+				default:
+				{
+					return false;
+				}
 			}
 		}
 		
@@ -62,16 +140,20 @@
 		
 		public void Add(T item)
 		{
-			var ok = this._underlyingCollection.TryAdd(this.Count + 1, item);
-			if (!ok)
-			{
-				ThrowHelper.ThrowInvalidOperationException($"Unable to successfully add {nameof(item)} to the collection. This was probably due to an internal key issue.");
-			}
+			this._underlyingCollection[this.Count] = item;
 		}
 
 		public bool TryAdd(T item)
 		{
-			return this._underlyingCollection.TryAdd(this.Count + 1, item);
+			try
+			{
+				this._underlyingCollection[this.Count] = item;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 		
 		public T AddOrUpdate(int index, T item, Func<int, T, T> factory)
@@ -83,7 +165,11 @@
 		{
 			for (var i = 0; i < items.Count; i++)
 			{
-				this._underlyingCollection.TryAdd(this.Count + 1, items[i]);
+				var ok = this._underlyingCollection.TryAdd(this.Count + 1, items[i]);
+				if (!ok)
+				{
+					
+				}
 			}
 		}
 
@@ -96,7 +182,7 @@
 		{
 			this._underlyingCollection[index] = item;
 		}
-		
+
 		public bool Remove(T item)
 		{
 			for (var i = 0; i < this.Count; i++)
@@ -300,9 +386,17 @@
 
 		public static bool operator ==(ConcurrentList<T> left, ConcurrentList<T> right)
 		{
-			if ((left is null && right is null) || 
-			    (left is null && right is not null) || 
-			    (left is not null && right is null))
+			if (left is null && right is null)
+			{
+				return false;
+			}
+
+			if (left is null && right is not null)
+			{
+				return false;
+			}
+
+			if (left is not null && right is null)
 			{
 				return false;
 			}

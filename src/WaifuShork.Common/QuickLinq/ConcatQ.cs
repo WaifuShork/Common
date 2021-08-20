@@ -32,7 +32,7 @@
 			{
 				result[i] = second[i - second.Length];
 			}
-			
+
 			return result;
 		}
 		
