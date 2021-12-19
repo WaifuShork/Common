@@ -1,6 +1,5 @@
-﻿using System;
-
-namespace WaifuShork.Common.Attributes;
+﻿namespace WaifuShork.Common.Attributes;
+using System;
 
 [AttributeUsage(AttributeTargets.Method | 
                 AttributeTargets.Delegate | 

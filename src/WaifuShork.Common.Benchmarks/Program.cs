@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading;
 using BenchmarkDotNet.Attributes;
-using WaifuShork.Common.Extensions;
+using WaifuShork.Common.Text;
+using WaifuShork.Extensions;
 
 namespace WaifuShork.Common.Benchmarks
 {
@@ -11,13 +11,12 @@ namespace WaifuShork.Common.Benchmarks
 	{
 		private static void Main(string[] args)
 		{
-			using var progressBar = new ConsoleProgressBar(totalUnitsOfWork: 3500);
-
+			/*using var progressBar = new ConsoleProgressBar(totalUnitsOfWork: 3500);
 			for (var i = 0U; i < 3500; i++)
 			{
 				progressBar.Draw(i + 1);
 				Thread.Sleep(1);
-			}
+			}*/
 		}
 	}
 	

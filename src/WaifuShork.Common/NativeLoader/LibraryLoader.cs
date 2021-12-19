@@ -141,17 +141,17 @@ namespace WaifuShork.Common.NativeLoader
 		{
 			protected override IntPtr CoreLoadNativeLibrary(string name)
 			{
-				return Libdl.dlopen(name, Libdl.RtldNow);
+				return Libdl.DlOpen(name, Libdl.RtldNow);
 			}
 
 			protected override void CoreFreeNativeLibrary(IntPtr handle)
 			{
-				Libdl.dlclose(handle);
+				Libdl.DlClose(handle);
 			}
 
 			protected override IntPtr CoreLoadFunctionPointer(IntPtr handle, string functionName)
 			{
-				return Libdl.dlsym(handle, functionName);
+				return Libdl.DlSym(handle, functionName);
 			}
 		}
 	}

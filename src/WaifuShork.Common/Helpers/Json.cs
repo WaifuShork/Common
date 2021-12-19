@@ -1,13 +1,14 @@
-﻿using System;
+﻿
+namespace WaifuShork.Common.Helpers;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+
 using System.Threading.Tasks;
 using WaifuShork.Common.Attributes;
 using WaifuShork.Common.Extensions;
-
-namespace WaifuShork.Common.Helpers;
 
 public static class Json
 {

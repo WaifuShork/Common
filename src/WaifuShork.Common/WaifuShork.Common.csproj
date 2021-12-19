@@ -11,6 +11,7 @@
         <Nullable>enable</Nullable>
         <TargetFramework>net6.0</TargetFramework>
         <EnablePreviewFeatures>True</EnablePreviewFeatures>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -33,10 +34,6 @@
       <PackageReference Include="Microsoft.Toolkit.Diagnostics" Version="7.0.2" />
       <PackageReference Include="System.CodeDom" Version="5.0.0" />
       <PackageReference Include="System.Runtime.Experimental" Version="6.0.0" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Exceptions" />
     </ItemGroup>
 
 </Project>

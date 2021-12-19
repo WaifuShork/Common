@@ -1,23 +1,22 @@
-﻿namespace WaifuShork.Common.NativeLoader
-{
-	using System;
-	using System.Runtime.InteropServices;
+﻿namespace WaifuShork.Common.NativeLoader;
+
+using System;
+using System.Runtime.InteropServices;
 	
-	internal static class Libdl
-	{
-		private const string _libName = "libdl";
-		public const int RtldNow = 0x002;
+internal static class Libdl
+{
+	private const string _libName = "libdl";
+	public const int RtldNow = 0x002;
 
-		[DllImport(_libName)]
-		public static extern IntPtr dlopen(string fileName, int flags);
+	[DllImport(_libName, EntryPoint = "dlopen", CharSet = CharSet.Unicode)]
+	public static extern IntPtr DlOpen(string fileName, int flags);
 
-		[DllImport(_libName)]
-		public static extern IntPtr dlsym(IntPtr handle, string name);
+	[DllImport(_libName, EntryPoint = "dlclose", CharSet = CharSet.Unicode)]
+	public static extern int DlClose(IntPtr handle);
 
-		[DllImport(_libName)]
-		public static extern int dlclose(IntPtr handle);
+	[DllImport(_libName, EntryPoint = "dlsym", CharSet = CharSet.Unicode)]
+	public static extern IntPtr DlSym(IntPtr handle, string name);
 
-		[DllImport(_libName)]
-		public static extern string dlerror();
-	}
+	[DllImport(_libName, EntryPoint = "dlerror", CharSet = CharSet.Unicode)]
+	public static extern string DlError();
 }
