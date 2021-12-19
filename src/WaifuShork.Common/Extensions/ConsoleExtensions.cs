@@ -3,6 +3,8 @@
 // But I wanted to ensure that it's always supported in the latest versions, and add some of my own 
 // unstable changes (if I ever need to do so). I have no intent on claiming their code as mine :)
 
+using System.IO.IsolatedStorage;
+
 namespace WaifuShork.Common.Extensions
 {
     using System;
@@ -19,7 +21,7 @@ namespace WaifuShork.Common.Extensions
     /// </summary>
     public static class ConsoleExtensions
     {
-        private const int  STD_OUTPUT_HANDLE = -11;
+        private const int STD_OUTPUT_HANDLE = -11;
         private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
 
         [DllImport("kernel32.dll")]
@@ -27,7 +29,7 @@ namespace WaifuShork.Common.Extensions
 
         [DllImport("kernel32.dll")]
         private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
-
+        
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
         
@@ -112,6 +114,7 @@ namespace WaifuShork.Common.Extensions
                 var iStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
                 _ = GetConsoleMode(iStdOut, out var outConsoleMode) && SetConsoleMode(iStdOut, outConsoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+
             }
             
             if (Environment.GetEnvironmentVariable("NO_COLOR") == null)

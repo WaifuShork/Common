@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
+using System.Threading;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
+using WaifuShork.Common.Extensions;
 
 namespace WaifuShork.Common.Benchmarks
 {
@@ -12,7 +11,13 @@ namespace WaifuShork.Common.Benchmarks
 	{
 		private static void Main(string[] args)
 		{
-			// _ = BenchmarkRunner.Run<Benchmarks>(ManualConfig.Create(DefaultConfig.Instance).AddJob(Job.RyuJitX64));
+			using var progressBar = new ConsoleProgressBar(totalUnitsOfWork: 3500);
+
+			for (var i = 0U; i < 3500; i++)
+			{
+				progressBar.Draw(i + 1);
+				Thread.Sleep(1);
+			}
 		}
 	}
 	

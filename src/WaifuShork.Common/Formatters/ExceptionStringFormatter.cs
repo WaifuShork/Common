@@ -1,127 +1,153 @@
 ﻿namespace WaifuShork.Common.Formatters
 {
 	using System;
+	using System.IO;
 	using QuickLinq;
 	using Extensions;
 	using System.Text;
 	using System.Linq;
-	using System.Dynamic;
+	using System.Reflection;
 	using System.Diagnostics;
-	using System.Globalization;
 	using System.Collections.Generic;
 
 	/// <summary>
 	/// A very nice new Exception format, that's incredibly readable, and easy to debug.
 	/// </summary>
-	public static class ExceptionStringFormatter 
+	public static class ExceptionStringFormatter
 	{
-		private const char CurlyBracketLeft = '{';
-		private const char CurlyBracketRight = '}';
-		private const char SquareBracketLeft = '[';
-		private const char SquareBracketRight = ']';
-		private const string RaquoSpacer = " » ";
-		private const int IndentWidth = 3;
-		
-		/// <summary>
-		/// Formats an exception to be *exceptionally* pretty and easy to read.
-		/// </summary>
-		/// <remarks>
-		///	This exception currently uses "dynamic" and "ExpandoObject" to easily make this possible.
-		/// I plan to fully rework this into a custom solution called "NeatException" or "Neatceptions".
-		/// Please provide an issue or PR if you have any ideas on improving for now.
-		/// </remarks>
-		/// <param name="exception">The exception to be formatted</param>
-		/// <typeparam name="TException">The type of exception that will be formatted</typeparam>
-		/// <returns>A pretty exception, with all of the same data that was in the original exception, but much easier to read.</returns>
-		public static string Format<TException>(this TException exception) where TException : Exception
+		public static string Prettify(this Exception exception, ExceptionOrder order = ExceptionOrder.Descending, int indentWidth = 4)
 		{
-			var exceptionInfos = GetExceptionInfos(exception).Reverse();
+			switch (order)
+			{
+				case ExceptionOrder.Ascending:
+					return string.Join(Environment.NewLine, exception.PrettifyCore(0, indentWidth).Reverse());
+				case ExceptionOrder.Descending:
+					return string.Join(Environment.NewLine, exception.PrettifyCore(0, indentWidth));
+				default:
+					throw new ArgumentOutOfRangeException(nameof(order), order, $"unsupported order {order}");
+			}
+		}
+		
+		private static IEnumerable<string> PrettifyCore(this Exception exception, int indent, int indentWidth)
+		{
+			var builder = new StringBuilder();
+
+			var makeIndent = new Func<int, string>((depth) => new string(' ', indentWidth * (depth + indent)));
+
+			builder.AppendLine($"{makeIndent(1)}{exception.GetType().Name}: \"{exception.Message}\"");
+
+			if (exception is AggregateException)
+			{
+				builder.AppendLine($"{makeIndent(2)}InnerExceptions: \"{((AggregateException)exception).InnerExceptions.Count}\"");
+			}
+
+			foreach (var property in exception.GetPropertiesExcept<Exception>())
+			{
+				builder.AppendLine($"{makeIndent(1)}{property.Name}: \"{property.Value}\"");
+			}
+
+			foreach (var property in exception.GetData())
+			{
+				builder.AppendLine($"{makeIndent(1)}Data[{property.Key}]: \"{property.Value}\"");
+			}
+
+			builder.AppendLine($"{makeIndent(2)}StackTrace:");
+
+			foreach (var stackTrace in exception.GetStackTrace() ?? Enumerable.Empty<StackFrame>())
+			{
+				builder.AppendLine($"{makeIndent(3)}{stackTrace.Caller} in \"{stackTrace.FileName}\" Ln {stackTrace.LineNumber}");
+			}
+
+			yield return builder.ToString();
+
+			if (exception is AggregateException)
+			{
+				foreach (var subStrings in ((AggregateException)exception).InnerExceptions.Select(ex => ex.PrettifyCore(indent + 1, indentWidth)))
+				{
+					foreach (var subString in subStrings)
+					{
+						yield return subString;
+					}
+				}
+			}
+			else if (exception.InnerException != null)
+			{
+				foreach (var subString in exception.InnerException.PrettifyCore(indent + 1, indentWidth))
+				{
+					yield return subString;
+				}
+			}
+		}
+		
+
+		public static IEnumerable<Property> GetPropertiesExcept<TException>(this Exception exception) where TException : Exception
+		{
+			var propertyFlags = BindingFlags.Instance | BindingFlags.Public;
+
+			var properties = exception.GetType()
+				.GetProperties(propertyFlags)
+				.Except(typeof(TException).GetProperties(propertyFlags))
+				.Select(p => new Property
+				{
+					Name = p.Name, 
+					Value = p.GetValue(exception)
+				})
+				.Where(p => p.Value != null && !string.IsNullOrWhiteSpace(p.Value as string));
 			
-			var exceptionString = new StringBuilder();
-			foreach (var exceptionInfo in exceptionInfos)
-			{
-				var exceptionName = exceptionInfo.ExceptionType.Name as string;
-				var exceptionMessage = exceptionInfo.ExceptionMessage as string;
-				
-				exceptionString
-					.Append(exceptionName).Append(RaquoSpacer)
-					.Append(exceptionMessage)
-					.Append($" [{DateTime.UtcNow.ToString("HH:m:s tt zzz", DateTimeFormatInfo.CurrentInfo)}]")
-					.AppendLine();
-
-				exceptionString.Append(CurlyBracketLeft).AppendLine();
-				
-				// format properties
-				exceptionString.Append(Indent(1)).Append("ExtraInfo:").AppendLine();
-				exceptionString.Append(Indent(1)).Append(SquareBracketLeft).AppendLine();
-				var customProperties = (IDictionary<string, object>)exceptionInfo.CustomProperties;
-				foreach (var (key, value) in customProperties)
-				{
-					exceptionString
-						.Append(Indent(2))
-						.Append($"{key}: ").Append($"\"{value}\"")
-						.AppendLine();
-				}
-
-				exceptionString.Append(Indent(1)).Append(SquareBracketRight).AppendLine();
-
-				exceptionString.Append(Indent(1)).Append("StackTrace:").AppendLine();
-				exceptionString.Append(Indent(1)).Append(SquareBracketLeft).AppendLine();
-
-				foreach (var stackFrame in exceptionInfo.StackTrace)
-				{
-					var lineNumber = stackFrame.LineNumber as int?;
-					var callerSignature = stackFrame.CallerSignature as string;
-					var fileName = stackFrame.FileName as string;
-					
-					exceptionString
-						.Append(Indent(2))
-						.Append($"(Line:{lineNumber})").Append(RaquoSpacer)
-						.Append(callerSignature).Append(RaquoSpacer)
-						.Append($"{fileName}:{lineNumber}")
-						.AppendLine();
-				}
-
-				exceptionString.Append(Indent(1)).Append(SquareBracketRight).AppendLine();
-				exceptionString.Append(CurlyBracketRight).AppendLine();
-			}
-
-			return exceptionString.ToString();
+			return properties;
 		}
-		
-		private static IEnumerable<dynamic> GetExceptionInfos<TException>(TException exceptionSource) where TException : Exception
+
+		private static IEnumerable<Data> GetData(this Exception exception)
 		{
-			foreach (var exception in exceptionSource.AsEnumerable())
+			foreach (var key in exception.Data.Keys)
 			{
-				dynamic exceptionInfo = new ExpandoObject();
-				exceptionInfo.ExceptionType = exception.GetType();
-				exceptionInfo.ExceptionMessage = exception.Message;
-
-				exceptionInfo.CustomProperties = new ExpandoObject() as dynamic;
-				foreach (var (key, value) in exception.GetCustomProperties())
+				yield return new()
 				{
-					((IDictionary<string, object>)exceptionInfo.CustomProperties)[key] = value;
-				}
-
-				var stackTrace = new StackTrace(exception, true);
-				var stackFrames = stackTrace.GetFrames();
-
-				exceptionInfo.StackTrace = stackFrames.SelectQ(sf =>
-				{
-					dynamic stackFrame = new ExpandoObject();
-					stackFrame.CallerSignature = sf.GetMethod().Format();
-					stackFrame.FileName = sf.GetFileName();
-					stackFrame.LineNumber = sf.GetFileLineNumber();
-					return stackFrame;
-				});
-
-				yield return exceptionInfo;
+					Key = key,
+					Value = exception.Data[key]
+				};
 			}
 		}
 
-		private static string Indent(int depth)
+		private static IEnumerable<StackFrame> GetStackTrace(this Exception exception)
 		{
-			return string.Empty.PadLeft(IndentWidth * depth);
+			var stackTrace = new StackTrace(exception, true);
+			var stackFrames = stackTrace.GetFrames();
+			var result = stackFrames?.SelectQ(sf => new StackFrame
+			{
+				Caller = (sf.GetMethod() as MethodInfo)?.ToShortString() ?? "",
+				FileName = Path.GetFileName(sf.GetFileName()),
+				LineNumber = sf.GetFileLineNumber()
+			});
+
+			return result;
 		}
+	}
+
+	public class Data
+	{
+		public object Key { get; init; }
+		public object Value { get; init; }
+	}
+
+	public class Property
+	{
+		public string Name { get; init; }
+		public object Value { get; init; }
+	}
+
+	public class ExceptionInfo
+	{
+		public Type ExceptionType { get; init; }
+		public string ExceptionMessage { get; init; }
+		public Dictionary<string, object> CustomProperties { get; init; }
+		public StackFrame[] StackTrace { get; init; }
+	}
+
+	public class StackFrame
+	{
+		public string Caller { get; init; }
+		public string FileName { get; init; }
+		public int LineNumber { get; init; }
 	}
 }

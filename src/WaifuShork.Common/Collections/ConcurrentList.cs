@@ -1,6 +1,4 @@
-﻿using WaifuShork.Common.QuickLinq;
-
-namespace WaifuShork.Common
+﻿namespace WaifuShork.Common
 {
 	using System;
 	using System.Linq;
@@ -161,14 +159,15 @@ namespace WaifuShork.Common
 			return this._underlyingCollection.AddOrUpdate(index, item, factory);
 		}
 		
-		public void AddRange(List<T> items)
+		public void AddRange(IEnumerable<T> items)
 		{
-			for (var i = 0; i < items.Count; i++)
+			var itemArray = items.ToArray();
+			foreach (var item in itemArray)
 			{
-				var ok = this._underlyingCollection.TryAdd(this.Count + 1, items[i]);
+				var ok = this._underlyingCollection.TryAdd(this.Count + 1, item);
 				if (!ok)
 				{
-					
+					continue;
 				}
 			}
 		}
