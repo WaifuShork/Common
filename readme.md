@@ -19,7 +19,12 @@ Most of this library is very poorly documented for right now, but I'll eventuall
 so stay tuned because it'll be `coming soon™`
 
 ## Do I Accept PRs?
-
 Yes and no. If you're **adding** new code entirely, I'll almost guaranteed decline it, because it likely isn't something
 I'll commonly use since it'll be for you. If you're **refactoring** already existing code to be faster, or better in any way,
 if it passes CI/CD then I'll most certainly merge it.
+
+## Object Math
+Have you ever wanted to add `(System.Object left) + (System.Object right)`? Well I have, so I made the hellish Object Math
+extension just so you don't have to. It supports any boxed type inside of `System.Object` with all the correct 
+return values (it will return `Nullable<System.Object>`), but they'll be operated on properly! It supports all arithmetic operators.
+
